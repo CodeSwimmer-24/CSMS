@@ -21,8 +21,13 @@ const forms: FormItem[] = [
     route: "ToolBokTalk",
   },
   { id: "2", title: "Daily Job Plan Form", icon: "run", route: "DailyJobPlan" },
-  { id: "3", title: "Tools & Tackles Check List", icon: "tools" },
-  { id: "4", title: "PPE Check List", icon: "hard-hat" },
+  {
+    id: "3",
+    title: "Tools & Tackles Check List",
+    icon: "tools",
+    route: "ToolsAndTackles",
+  },
+  { id: "4", title: "PPE Check List", icon: "hard-hat", route: "PPECheckList" },
 ];
 
 export default function ToolBoxMeetingScreen() {

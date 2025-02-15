@@ -8,6 +8,8 @@ import BottomTabNavigator from "./routers/Tab";
 import ToolBokMeeting from "./screens/ToolsBoxMeeting";
 import ToolBoxTalk from "./screens/ToolsBoxMeeting/Components/TBT";
 import DailyJobPlan from "./screens/ToolsBoxMeeting/Components/DJP";
+import ToolsAndTackles from "./screens/ToolsBoxMeeting/Components/ToolsTackles";
+import PPECheckList from "./screens/ToolsBoxMeeting/Components/PPE";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -26,6 +28,8 @@ export default function App() {
         <Stack.Screen name="ToolBokMeeting" component={ToolBokMeeting} />
         <Stack.Screen name="ToolBokTalk" component={ToolBoxTalk} />
         <Stack.Screen name="DailyJobPlan" component={DailyJobPlan} />
+        <Stack.Screen name="ToolsAndTackles" component={ToolsAndTackles} />
+        <Stack.Screen name="PPECheckList" component={PPECheckList} />
       </Stack.Navigator>
     </NavigationContainer>
   );
