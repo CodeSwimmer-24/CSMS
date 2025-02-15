@@ -1,21 +1,13 @@
 import React from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import InputBox from "../../../../../components/InputBox";
 import { colors } from "../../../../../global/colors";
 
 const StepOne = ({ nextStep, setFormData, formData }) => (
   <>
     <View style={styles.inputBox}>
-      <Text
-        style={{
-          color: "white",
-          fontSize: 20,
-          fontWeight: "600",
-        }}
-      >
-        Step One
-      </Text>
+      <Text style={styles.headerText}>Step One</Text>
     </View>
     <View style={styles.container}>
       <InputBox placeholder="13-02-2025" label="Today's Date" />
@@ -32,7 +24,15 @@ const StepOne = ({ nextStep, setFormData, formData }) => (
       />
 
       <TouchableOpacity style={styles.button} onPress={nextStep}>
-        <Text style={styles.buttonText}>Next →</Text>
+        <View style={styles.buttonIcon}>
+          <Text style={styles.buttonText}>Next</Text>
+          <AntDesign
+            name="arrowright"
+            style={{ marginLeft: 10 }}
+            size={20}
+            color="white"
+          />
+        </View>
       </TouchableOpacity>
     </View>
   </>
@@ -64,13 +64,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "#f5f5f5",
   },
+  headerText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "600",
+  },
   button: {
     backgroundColor: colors.primary,
     padding: 12,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: "center",
     marginTop: 20,
     elevation: 5,
+  },
+  buttonIcon: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
   },
   buttonText: {
     color: "#fff",
