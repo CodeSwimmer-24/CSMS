@@ -7,6 +7,7 @@ import WelcomeScreen from "./auth/WelcomeScreen";
 import BottomTabNavigator from "./routers/Tab";
 import ToolBokMeeting from "./screens/ToolsBoxMeeting";
 import ToolBoxTalk from "./screens/ToolsBoxMeeting/Components/TBT";
+import DailyJobPlan from "./screens/ToolsBoxMeeting/Components/DJP";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -24,6 +25,7 @@ export default function App() {
         />
         <Stack.Screen name="ToolBokMeeting" component={ToolBokMeeting} />
         <Stack.Screen name="ToolBokTalk" component={ToolBoxTalk} />
+        <Stack.Screen name="DailyJobPlan" component={DailyJobPlan} />
       </Stack.Navigator>
     </NavigationContainer>
   );

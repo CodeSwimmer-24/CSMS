@@ -20,7 +20,7 @@ const forms: FormItem[] = [
     icon: "file-document-outline",
     route: "ToolBokTalk",
   },
-  { id: "2", title: "Daily Job Plan Form", icon: "run" },
+  { id: "2", title: "Daily Job Plan Form", icon: "run", route: "DailyJobPlan" },
   { id: "3", title: "Tools & Tackles Check List", icon: "tools" },
   { id: "4", title: "PPE Check List", icon: "hard-hat" },
 ];
