@@ -28,14 +28,54 @@ const AccidentForm = ({ modalVisible, setModalVisible }) => {
 
             <View style={styles.pickerContainer}>
               <Text style={styles.pickerLabel}>Accident/Incident Type</Text>
-              <Picker
-                selectedValue={accidentType}
-                onValueChange={(itemValue) => setAccidentType(itemValue)}
-                style={styles.picker}
-              >
-                <Picker.Item label="Accident" value="Accident" />
-                <Picker.Item label="Incident" value="Incident" />
-              </Picker>
+              <View style={styles.pickerWrapper}>
+                <Picker
+                  selectedValue={accidentType}
+                  onValueChange={(itemValue) => setAccidentType(itemValue)}
+                  style={styles.picker}
+                >
+                  <Picker.Item
+                    label="Low Potential Near Mess (LPNM)"
+                    value="Low Potential Near Mess (LPNM)"
+                  />
+                  <Picker.Item
+                    label="High Potential Near Mess (HPNM)"
+                    value="High Potential Near Mess (HPNM)"
+                  />
+                  <Picker.Item
+                    label="First Aids (FA)"
+                    value="First Aids (FA)"
+                  />
+                  <Picker.Item
+                    label="Loss Time Injury (LTI)"
+                    value="Loss Time Injury (LTI)"
+                  />
+                  <Picker.Item
+                    label="Permenent Damage (PD)"
+                    value="Permenent Damage (PD)"
+                  />
+                  <Picker.Item
+                    label="Dangerious Occurrence (DO)"
+                    value="Dangerious Occurrence (DO)"
+                  />
+                  <Picker.Item
+                    label="Medical Treatment Case (MTC)"
+                    value="Medical Treatment Case (MTC)"
+                  />
+                  <Picker.Item
+                    label="Restricted Work Case (RWC)"
+                    value="Restricted Work Case (RWC)"
+                  />
+                  <Picker.Item
+                    label="High Leavel Property Damage (HLPD)"
+                    value="High Leavel Property Damage (HLPD)"
+                  />
+                  <Picker.Item
+                    label="Low Leavel Property Damage (LLPD)"
+                    value="Low Leavel Property Damage (LLPD)"
+                  />
+                </Picker>
+              </View>
             </View>
 
             <InputBox label="Accident Date" placeholder="Accident Date" />
@@ -78,7 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalContainer: {
-    height: "86%",
+    height: "95%",
     backgroundColor: "white",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -107,11 +147,16 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 20,
   },
+  pickerWrapper: {
+    borderWidth: 1, // Add border width
+    borderColor: "#ccc",
+    borderRadius: 10, // Apply border radius
+    overflow: "hidden", // Ensure the border radius is applied
+  },
   picker: {
     height: 50,
-    marginBottom: 10,
-    backgroundColor: `${colors.danger}1a`,
-    borderRadius: 10,
+    color: "#505050",
+    marginLeft: 5,
   },
   buttonContainer: {
     marginBottom: 20,
@@ -120,7 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   closeButton: {
-    backgroundColor: "gray",
+    backgroundColor: `${colors.danger}1a`,
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: "center",
@@ -129,7 +174,7 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "black",
+    color: colors.danger,
   },
   submitButton: {
     backgroundColor: colors.primary,

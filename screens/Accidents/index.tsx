@@ -2,35 +2,74 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Modal,
 } from "react-native";
+
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../global/colors";
+import DisplayAccidentData from "./Display/DisplayAccidentData";
 import AccidentForm from "./Form/AccidentForm";
 
 // Data for Forms
 const formsData = [
-  { id: "1", title: "Low Potential Near Miss" },
-  { id: "7", title: "High Potential Near Miss" },
-  { id: "2", title: "First Aid's" },
-  { id: "3", title: "Lost Time Injury" },
-  { id: "4", title: "Permanent Disability" },
-  { id: "5", title: "Dangerous Occurrence" },
-  { id: "6", title: "Medical Treatment Case" },
-  { id: "10", title: "Restricted Work Case" },
-  { id: "8", title: "High Level Property Damage" },
-  { id: "9", title: "Low Level Property Damage" },
+  {
+    id: "1",
+    title: "Low Potential Near Miss",
+    description: "Details about Low Potential Near Miss.",
+  },
+  {
+    id: "7",
+    title: "High Potential Near Miss",
+    description: "Details about High Potential Near Miss.",
+  },
+  { id: "2", title: "First Aid's", description: "Details about First Aid's." },
+  {
+    id: "3",
+    title: "Lost Time Injury",
+    description: "Details about Lost Time Injury.",
+  },
+  {
+    id: "4",
+    title: "Permanent Disability",
+    description: "Details about Permanent Disability.",
+  },
+  {
+    id: "5",
+    title: "Dangerous Occurrence",
+    description: "Details about Dangerous Occurrence.",
+  },
+  {
+    id: "6",
+    title: "Medical Treatment Case",
+    description: "Details about Medical Treatment Case.",
+  },
+  {
+    id: "10",
+    title: "Restricted Work Case",
+    description: "Details about Restricted Work Case.",
+  },
+  {
+    id: "8",
+    title: "High Level Property Damage",
+    description: "Details about High Level Property Damage.",
+  },
+  {
+    id: "9",
+    title: "Low Level Property Damage",
+    description: "Details about Low Level Property Damage.",
+  },
 ];
 
 // Card Component
-const FormCard = ({ title }) => {
+const FormCard = ({ title, onPress }) => {
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onPress}>
       <Text style={styles.cardTitle}>{title}</Text>
+      <View style={styles.statusRow}>
+        <FontAwesome5 name="arrow-right" size={14} color={colors.primary} />
+      </View>
     </TouchableOpacity>
   );
 };
@@ -38,6 +77,14 @@ const FormCard = ({ title }) => {
 // Main Component
 const Accident = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [formOpen, setFormOpen] = useState(false);
+
+  // Open Modal with Data
+  const openModal = (item) => {
+    setSelectedItem(item);
+    setModalVisible(true);
+  };
 
   return (
     <View style={styles.container}>
@@ -52,30 +99,34 @@ const Accident = () => {
         </View>
 
         {/* Grid Layout for Cards */}
-        <FlatList
-          data={formsData}
-          renderItem={({ item }) => <FormCard title={item.title} />}
-          keyExtractor={(item) => item.id}
-          numColumns={2} // Grid Layout
-          columnWrapperStyle={styles.row} // Space between columns
-          contentContainerStyle={styles.listContent} // Avoid cut-off at bottom
-          scrollEnabled={false} // Prevents FlatList from handling scroll
-        />
+        <View style={styles.gridContainer}>
+          {formsData.map((item) => (
+            <FormCard
+              key={item.id}
+              title={item.title}
+              onPress={() => openModal(item)}
+            />
+          ))}
+        </View>
       </ScrollView>
 
       {/* Floating Plus Button */}
       <TouchableOpacity
         style={styles.floatingButton}
-        onPress={() => setModalVisible(true)}
+        onPress={() => setFormOpen(true)}
       >
         <MaterialCommunityIcons name="plus" size={30} color="white" />
       </TouchableOpacity>
 
+      {formOpen && (
+        <AccidentForm modalVisible={formOpen} setModalVisible={setFormOpen} />
+      )}
       {/* Bottom Popup Modal */}
       {modalVisible && (
-        <AccidentForm
+        <DisplayAccidentData
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          selectedItem={selectedItem}
         />
       )}
     </View>
@@ -106,30 +157,30 @@ const styles = StyleSheet.create({
     color: "white",
     marginVertical: 10,
   },
-  row: {
+  gridContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
-    marginTop: 20,
-  },
-  listContent: {
-    paddingBottom: 80, // Space for floating button
+    padding: 25,
   },
   card: {
-    flex: 1,
-    margin: 8,
+    width: "48%", // 2 columns with spacing
+    marginBottom: 15,
     padding: 20,
-    borderRadius: 5,
-    backgroundColor: "white",
-    elevation: 3, // Shadow for Android
-    shadowColor: "#000", // Shadow for iOS
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    borderRadius: 10, // Rounded corners
+    backgroundColor: "#F3F6FF", // Soft blue background
+    elevation: 2,
   },
   cardTitle: {
     fontSize: 16,
     fontWeight: "600",
     color: colors.primary,
+    marginBottom: 5,
+  },
+  statusRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   /* Floating Plus Button */
   floatingButton: {
@@ -143,10 +194,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
   },
 });
 
