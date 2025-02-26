@@ -12,6 +12,7 @@ import ToolsAndTackles from "./screens/ToolsBoxMeeting/Components/ToolsTackles";
 import PPECheckList from "./screens/ToolsBoxMeeting/Components/PPE";
 import FSGR from "./screens/FSGR";
 import Accidents from "./screens/Accidents";
+import Violation from "./screens/Violation";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="PPECheckList" component={PPECheckList} />
         <Stack.Screen name="FSGR" component={FSGR} />
         <Stack.Screen name="Accidents" component={Accidents} />
+        <Stack.Screen name="Violation" component={Violation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
