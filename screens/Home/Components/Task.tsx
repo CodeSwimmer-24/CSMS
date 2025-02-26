@@ -19,7 +19,7 @@ const settingsOptions = [
     description: "Feedback, Suggation, Gravance, Report",
     icon: "bonfire",
     color: "#E76F51",
-    route: "DailyJobPlan",
+    route: "FSGR",
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const settingsOptions = [
     description: "Set daily limit of device",
     icon: "battery-full",
     color: "#2A9D8F",
-    route: "Accident",
+    route: "Accidents",
   },
 ];
 

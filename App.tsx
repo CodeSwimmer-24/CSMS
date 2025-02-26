@@ -10,6 +10,8 @@ import ToolBoxTalk from "./screens/ToolsBoxMeeting/Components/TBT";
 import DailyJobPlan from "./screens/ToolsBoxMeeting/Components/DJP";
 import ToolsAndTackles from "./screens/ToolsBoxMeeting/Components/ToolsTackles";
 import PPECheckList from "./screens/ToolsBoxMeeting/Components/PPE";
+import FSGR from "./screens/FSGR";
+import Accidents from "./screens/Accidents";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -30,6 +32,8 @@ export default function App() {
         <Stack.Screen name="DailyJobPlan" component={DailyJobPlan} />
         <Stack.Screen name="ToolsAndTackles" component={ToolsAndTackles} />
         <Stack.Screen name="PPECheckList" component={PPECheckList} />
+        <Stack.Screen name="FSGR" component={FSGR} />
+        <Stack.Screen name="Accidents" component={Accidents} />
       </Stack.Navigator>
     </NavigationContainer>
   );
