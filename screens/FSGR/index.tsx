@@ -1,26 +1,23 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import {
-  AntDesign,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../../global/colors";
-import FeedbackModal from "./FeedbackModal";
 import Feedback from "./Feedback/Feedback";
-
+import Suggestion from "./Suggestion/Suggestion";
+import Grievances from "./Grievances/Grievances";
+import Report from "./Report/Report";
 // Define Type for Forms
 interface FormItem {
   id: string;
   title: string;
-  icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  icon: keyof typeof MaterialIcons.glyphMap;
 }
 
 // Forms Data
 const forms: FormItem[] = [
   { id: "1", title: "FeedBack", icon: "feedback" },
   { id: "2", title: "Suggestion", icon: "wifi-calling-3" },
-  { id: "3", title: "Grievances", icon: "people-alt" },
+  { id: "3", title: "Grievances/Complaints", icon: "format-list-bulleted-add" },
   { id: "4", title: "Report", icon: "report" },
 ];
 
@@ -31,6 +28,11 @@ export default function FSGR() {
   const openModal = (form: FormItem) => {
     setSelectedForm(form);
     setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedForm(null);
   };
 
   return (
@@ -77,13 +79,38 @@ export default function FSGR() {
         ))}
       </View>
 
-      {/* Feedback Modal */}
-      {modalVisible && (
-        <Feedback
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          selectedForm={selectedForm}
-        />
+      {/* Modals - Open Based on Selection */}
+      {modalVisible && selectedForm && (
+        <>
+          {selectedForm.title === "FeedBack" && (
+            <Feedback
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              selectedForm={selectedForm}
+            />
+          )}
+          {selectedForm.title === "Suggestion" && (
+            <Suggestion
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              selectedForm={selectedForm}
+            />
+          )}
+          {selectedForm.title === "Grievances/Complaints" && (
+            <Grievances
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              selectedForm={selectedForm}
+            />
+          )}
+          {selectedForm.title === "Report" && (
+            <Report
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              selectedForm={selectedForm}
+            />
+          )}
+        </>
       )}
     </>
   );

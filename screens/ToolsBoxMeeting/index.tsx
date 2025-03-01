@@ -28,6 +28,12 @@ const forms: FormItem[] = [
     route: "ToolsAndTackles",
   },
   { id: "4", title: "PPE Check List", icon: "hard-hat", route: "PPECheckList" },
+  {
+    id: "5",
+    title: "Daily House Keeping Inspection",
+    icon: "brush-variant",
+    route: "dailyHouseKeeping",
+  },
 ];
 
 export default function ToolBoxMeetingScreen() {
@@ -62,7 +68,6 @@ export default function ToolBoxMeetingScreen() {
               <View style={styles.cardContent}>
                 <Text style={styles.cardTitle}>{item.title}</Text>
                 <View style={styles.goButton}>
-                  <Text style={styles.goButtonText}>Click To Go</Text>
                   <AntDesign
                     name="arrowright"
                     size={18}

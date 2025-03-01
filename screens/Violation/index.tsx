@@ -4,131 +4,67 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Dimensions,
   ScrollView,
 } from "react-native";
-
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { colors } from "../../global/colors";
-import DisplayAccidentData from "./Display/DisplayAccidentData";
-import AccidentForm from "./Form/AccidentForm";
 import ViolationForm from "./ViolationForm/ViolationForm";
-import DisplayViolationData from "./DisplayViolationData/DisplayViolationData";
+import OpenViolation from "./DisplayViolationData/OpenViolation";
+import CloseViolation from "./DisplayViolationData/CloseViolation";
 
-// Data for Forms
-const formsData = [
-  {
-    id: "1",
-    title: "Low Potential Near Miss",
-    description: "Details about Low Potential Near Miss.",
-  },
-  {
-    id: "7",
-    title: "High Potential Near Miss",
-    description: "Details about High Potential Near Miss.",
-  },
-  { id: "2", title: "First Aid's", description: "Details about First Aid's." },
-  {
-    id: "3",
-    title: "Lost Time Injury",
-    description: "Details about Lost Time Injury.",
-  },
-  {
-    id: "4",
-    title: "Permanent Disability",
-    description: "Details about Permanent Disability.",
-  },
-  {
-    id: "5",
-    title: "Dangerous Occurrence",
-    description: "Details about Dangerous Occurrence.",
-  },
-  {
-    id: "6",
-    title: "Medical Treatment Case",
-    description: "Details about Medical Treatment Case.",
-  },
-  {
-    id: "10",
-    title: "Restricted Work Case",
-    description: "Details about Restricted Work Case.",
-  },
-  {
-    id: "8",
-    title: "High Level Property Damage",
-    description: "Details about High Level Property Damage.",
-  },
-  {
-    id: "9",
-    title: "Low Level Property Damage",
-    description: "Details about Low Level Property Damage.",
-  },
-];
-
-// Card Component
-const FormCard = ({ title, onPress }) => {
-  return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
-      <Text style={styles.cardTitle}>{title}</Text>
-      <View style={styles.statusRow}>
-        <FontAwesome5 name="arrow-right" size={14} color={colors.primary} />
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-// Main Component
+// Tab View
 const Violation = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [formOpen, setFormOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "logged", title: "Open Violations" },
+    { key: "closed", title: "Close Violations" },
+  ]);
 
-  // Open Modal with Data
-  const openModal = (item) => {
-    setSelectedItem(item);
-    setModalVisible(true);
-  };
+  const renderScene = SceneMap({
+    logged: OpenViolation,
+    closed: CloseViolation,
+  });
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.heading}>Violation / Good Observation</Text>
-          <Text style={styles.description}>
-            You have to fill all the forms on a daily basis, so that the record
-            is maintained. All the details can be seen on the office admin site.
-          </Text>
-        </View>
-
-        {/* Grid Layout for Cards */}
-        <View style={styles.gridContainer}>
-          {formsData.map((item) => (
-            <FormCard
-              key={item.id}
-              title={item.title}
-              onPress={() => openModal(item)}
+      {/* Swipeable Tabs */}
+      <View style={styles.header}>
+        <Text style={styles.heading}>Vialation Tracking</Text>
+      </View>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: Dimensions.get("window").width }}
+        renderTabBar={(props) => (
+          <View style={{ backgroundColor: "red" }}>
+            {/* Default TabBar */}
+            <TabBar
+              {...props}
+              style={{ backgroundColor: colors.primary }} // 🔴 Change Tab Bar Color to Red
+              indicatorStyle={{ backgroundColor: "white" }} // Underline Indicator Color
+              activeColor="white" // Active Tab Text Color
+              inactiveColor="rgba(255, 255, 255, 0.7)" // Inactive Tab Text Color
             />
-          ))}
-        </View>
-      </ScrollView>
+          </View>
+        )}
+      />
 
-      {/* Floating Plus Button */}
+      {/* Floating Button */}
       <TouchableOpacity
         style={styles.floatingButton}
-        onPress={() => setFormOpen(true)}
+        onPress={() => setModalVisible(true)}
       >
-        <MaterialCommunityIcons name="plus" size={30} color="white" />
+        <Text style={styles.bttnColor}>+ Log Violation</Text>
       </TouchableOpacity>
 
-      {formOpen && (
-        <ViolationForm modalVisible={formOpen} setModalVisible={setFormOpen} />
-      )}
-      {/* Bottom Popup Modal */}
       {modalVisible && (
-        <DisplayViolationData
+        <ViolationForm
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          selectedItem={selectedItem}
         />
       )}
     </View>
@@ -137,9 +73,6 @@ const Violation = () => {
 
 // Styles
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -153,49 +86,58 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "600",
     color: "white",
+    paddingHorizontal: 10,
   },
   description: {
     fontSize: 14,
     color: "white",
     marginVertical: 10,
   },
-  gridContainer: {
+  tabBar: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    padding: 25,
-  },
-  card: {
-    width: "48%", // 2 columns with spacing
-    marginBottom: 15,
-    padding: 20,
-    borderRadius: 10, // Rounded corners
-    backgroundColor: "#F3F6FF", // Soft blue background
-    elevation: 2,
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.primary,
-    marginBottom: 5,
-  },
-  statusRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  /* Floating Plus Button */
-  floatingButton: {
-    position: "absolute",
-    right: 40,
-    bottom: 50,
     backgroundColor: colors.primary,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    paddingVertical: 10,
+    justifyContent: "space-around",
+  },
+  tabButton: {
+    paddingVertical: 10,
+  },
+  activeTab: {
+    borderBottomWidth: 2,
+    borderBottomColor: "white",
+  },
+  tabText: {
+    fontSize: 16,
+    color: "red",
+  },
+  activeTabText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  scene: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  tabContent: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.primary,
+  },
+  floatingButton: {
+    position: "absolute",
+    right: 30,
+    bottom: 40,
+    backgroundColor: colors.primary,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 30,
     elevation: 5,
+  },
+  bttnColor: {
+    color: "white",
+    fontWeight: "400",
+    fontSize: 16,
   },
 });
 

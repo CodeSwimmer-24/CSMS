@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -11,8 +11,10 @@ import Modal from "react-native-modal";
 import { colors } from "../../../global/colors";
 import InputBox from "../../../components/InputBox";
 import Feather from "@expo/vector-icons/Feather";
+import { Picker } from "@react-native-picker/picker";
 
 const Feedback = ({ setModalVisible, modalVisible, selectedForm }) => {
+  const [accidentType, setAccidentType] = useState("");
   return (
     <Modal
       isVisible={modalVisible}
@@ -35,17 +37,44 @@ const Feedback = ({ setModalVisible, modalVisible, selectedForm }) => {
 
           {/* Input Fields */}
           <View style={styles.inputContainer}>
-            <InputBox label="FSGR Title" placeholder="Enter your FSGR Topic" />
+            <View style={styles.pickerContainer}>
+              <Text style={styles.pickerLabel}>FSGR Title</Text>
+              <View style={styles.pickerWrapper}>
+                <Picker
+                  selectedValue={accidentType}
+                  onValueChange={(itemValue) => setAccidentType(itemValue)}
+                  style={styles.picker}
+                >
+                  <Picker.Item
+                    label="Retention(अवधारण)"
+                    value="Retention(अवधारण)"
+                  />
+                  <Picker.Item
+                    label="Amenities (सुविधाएं)"
+                    value="Amenities (सुविधाएं)"
+                  />
+                  <Picker.Item
+                    label="Unsafe Act (असुरक्षित कृत्य)"
+                    value="Unsafe Act (असुरक्षित कृत्य)"
+                  />
+                  <Picker.Item
+                    label="Unsafe Condition (असुरक्षित हालत)"
+                    value="Unsafe Condition (असुरक्षित हालत)"
+                  />
+                  <Picker.Item label="Enquiry Act" value="Enquiry Act" />
+                </Picker>
+              </View>
+            </View>
+
             <InputBox
-              label="Reporting Person Name"
-              placeholder="Enter Reporting Person Name"
+              label="Feedback Shared By"
+              placeholder="Enter Name who Shared Feedback"
             />
             <InputBox
-              label="Safety Supervisor Name"
-              placeholder="Enter Safety Supervisor Name"
+              label="Feedback Shared Through"
+              placeholder="Mention Name or (Self)"
             />
             <InputBox label="Incharge Name" placeholder="Enter Incharge Name" />
-            <InputBox label="Priority" placeholder="Set Priority" />
             <InputBox
               label="Explain your Problem"
               placeholder="Explain your Problem in detail."
@@ -90,6 +119,28 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
     color: colors.danger,
+  },
+  pickerContainer: {
+    marginBottom: 10,
+    marginTop: 20,
+  },
+  pickerLabel: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.primary,
+    marginBottom: 5,
+    marginTop: 20,
+  },
+  pickerWrapper: {
+    borderWidth: 1, // Add border width
+    borderColor: "#ccc",
+    borderRadius: 10, // Apply border radius
+    overflow: "hidden", // Ensure the border radius is applied
+  },
+  picker: {
+    height: 50,
+    color: "#505050",
+    marginLeft: 5,
   },
   modalTitle: {
     fontSize: 24,

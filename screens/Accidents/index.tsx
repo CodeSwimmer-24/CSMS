@@ -7,59 +7,22 @@ import {
   ScrollView,
 } from "react-native";
 
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { colors } from "../../global/colors";
-import DisplayAccidentData from "./Display/DisplayAccidentData";
 import AccidentForm from "./Form/AccidentForm";
 
 // Data for Forms
 const formsData = [
-  {
-    id: "1",
-    title: "Low Potential Near Miss",
-    description: "Details about Low Potential Near Miss.",
-  },
-  {
-    id: "7",
-    title: "High Potential Near Miss",
-    description: "Details about High Potential Near Miss.",
-  },
-  { id: "2", title: "First Aid's", description: "Details about First Aid's." },
-  {
-    id: "3",
-    title: "Lost Time Injury",
-    description: "Details about Lost Time Injury.",
-  },
-  {
-    id: "4",
-    title: "Permanent Disability",
-    description: "Details about Permanent Disability.",
-  },
-  {
-    id: "5",
-    title: "Dangerous Occurrence",
-    description: "Details about Dangerous Occurrence.",
-  },
-  {
-    id: "6",
-    title: "Medical Treatment Case",
-    description: "Details about Medical Treatment Case.",
-  },
-  {
-    id: "10",
-    title: "Restricted Work Case",
-    description: "Details about Restricted Work Case.",
-  },
-  {
-    id: "8",
-    title: "High Level Property Damage",
-    description: "Details about High Level Property Damage.",
-  },
-  {
-    id: "9",
-    title: "Low Level Property Damage",
-    description: "Details about Low Level Property Damage.",
-  },
+  { id: "1", title: "Low Potential Near Miss" },
+  { id: "7", title: "High Potential Near Miss" },
+  { id: "2", title: "First Aid's" },
+  { id: "3", title: "Lost Time Injury" },
+  { id: "4", title: "Permanent Disability" },
+  { id: "5", title: "Dangerous Occurrence" },
+  { id: "6", title: "Medical Treatment Case" },
+  { id: "10", title: "Restricted Work Case" },
+  { id: "8", title: "High Level Property Damage" },
+  { id: "9", title: "Low Level Property Damage" },
 ];
 
 // Card Component
@@ -76,14 +39,13 @@ const FormCard = ({ title, onPress }) => {
 
 // Main Component
 const Accident = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
   const [formOpen, setFormOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  // Open Modal with Data
-  const openModal = (item) => {
+  // Open Form Modal with Selected Item
+  const openForm = (item) => {
     setSelectedItem(item);
-    setModalVisible(true);
+    setFormOpen(true);
   };
 
   return (
@@ -104,29 +66,18 @@ const Accident = () => {
             <FormCard
               key={item.id}
               title={item.title}
-              onPress={() => openModal(item)}
+              onPress={() => openForm(item)}
             />
           ))}
         </View>
       </ScrollView>
 
-      {/* Floating Plus Button */}
-      <TouchableOpacity
-        style={styles.floatingButton}
-        onPress={() => setFormOpen(true)}
-      >
-        <MaterialCommunityIcons name="plus" size={30} color="white" />
-      </TouchableOpacity>
-
+      {/* Form Modal */}
       {formOpen && (
-        <AccidentForm modalVisible={formOpen} setModalVisible={setFormOpen} />
-      )}
-      {/* Bottom Popup Modal */}
-      {modalVisible && (
-        <DisplayAccidentData
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          selectedItem={selectedItem}
+        <AccidentForm
+          modalVisible={formOpen}
+          setModalVisible={setFormOpen}
+          title={selectedItem?.title}
         />
       )}
     </View>
@@ -164,11 +115,11 @@ const styles = StyleSheet.create({
     padding: 25,
   },
   card: {
-    width: "48%", // 2 columns with spacing
+    width: "48%",
     marginBottom: 15,
     padding: 20,
-    borderRadius: 10, // Rounded corners
-    backgroundColor: "#F3F6FF", // Soft blue background
+    borderRadius: 10,
+    backgroundColor: "#F3F6FF",
     elevation: 2,
   },
   cardTitle: {
@@ -181,19 +132,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-  },
-  /* Floating Plus Button */
-  floatingButton: {
-    position: "absolute",
-    right: 40,
-    bottom: 50,
-    backgroundColor: colors.primary,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 5,
   },
 });
 

@@ -35,17 +35,16 @@ const Suggestion = ({ setModalVisible, modalVisible, selectedForm }) => {
 
           {/* Input Fields */}
           <View style={styles.inputContainer}>
-            <InputBox label="FSGR Title" placeholder="Enter your FSGR Topic" />
             <InputBox
-              label="Reporting Person Name"
-              placeholder="Enter Reporting Person Name"
+              label="Feedback Shared By"
+              placeholder="Enter Name who Shared Feedback"
             />
             <InputBox
-              label="Safety Supervisor Name"
-              placeholder="Enter Safety Supervisor Name"
+              label="Feedback Shared Through"
+              placeholder="Mention Name or (Self)"
             />
             <InputBox label="Incharge Name" placeholder="Enter Incharge Name" />
-            <InputBox label="Priority" placeholder="Set Priority" />
+
             <InputBox
               label="Explain your Problem"
               placeholder="Explain your Problem in detail."

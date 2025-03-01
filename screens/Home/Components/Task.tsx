@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 const settingsOptions = [
   {
     id: 1,
-    title: "Tool Box Meeting",
+    title: "Safe Execution Of Job",
     description: "TBT, DJP, PPE CheckList, Tools Check List",
     icon: "document-text",
     color: "#6A3DF5",

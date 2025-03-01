@@ -11,7 +11,7 @@ import { colors } from "../../../global/colors";
 import InputBox from "../../../components/InputBox";
 import { Picker } from "@react-native-picker/picker";
 
-const AccidentForm = ({ modalVisible, setModalVisible }) => {
+const AccidentForm = ({ modalVisible, setModalVisible, title }) => {
   const [accidentType, setAccidentType] = useState("Accident");
 
   return (
@@ -26,7 +26,7 @@ const AccidentForm = ({ modalVisible, setModalVisible }) => {
           <ScrollView contentContainerStyle={styles.modalContent}>
             <Text style={styles.modalTitle}>Accident / Incident Report</Text>
 
-            <View style={styles.pickerContainer}>
+            {/* <View style={styles.pickerContainer}>
               <Text style={styles.pickerLabel}>Accident/Incident Type</Text>
               <View style={styles.pickerWrapper}>
                 <Picker
@@ -76,8 +76,9 @@ const AccidentForm = ({ modalVisible, setModalVisible }) => {
                   />
                 </Picker>
               </View>
-            </View>
-
+            </View> */}
+            <InputBox label="Accident Type" placeholder={title} />
+            <InputBox label="Accident Date" placeholder="Violaton Date" />
             <InputBox label="Accident Date" placeholder="Accident Date" />
             <InputBox
               label="Accident Location"
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "600",
     color: colors.primary,
-    marginBottom: 10,
+    marginBottom: 20,
     marginTop: 20,
   },
   pickerContainer: {

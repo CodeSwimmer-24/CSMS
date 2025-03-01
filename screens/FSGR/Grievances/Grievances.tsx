@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  Pressable,
+  TouchableOpacity,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
+  Platform,
 } from "react-native";
 import Modal from "react-native-modal";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { colors } from "../../../global/colors";
 import InputBox from "../../../components/InputBox";
 import Feather from "@expo/vector-icons/Feather";
 
 const Grievances = ({ setModalVisible, modalVisible, selectedForm }) => {
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const handleDateChange = (event, selectedDate) => {
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+    setShowDatePicker(Platform.OS === "ios"); // Keep open for iOS, auto-close for Android
+  };
+
   return (
     <Modal
       isVisible={modalVisible}
@@ -35,21 +46,42 @@ const Grievances = ({ setModalVisible, modalVisible, selectedForm }) => {
 
           {/* Input Fields */}
           <View style={styles.inputContainer}>
-            <InputBox label="FSGR Title" placeholder="Enter your FSGR Topic" />
             <InputBox
-              label="Reporting Person Name"
-              placeholder="Enter Reporting Person Name"
+              label="Feedback Shared By"
+              placeholder="Enter Name who Shared Feedback"
             />
             <InputBox
-              label="Safety Supervisor Name"
-              placeholder="Enter Safety Supervisor Name"
+              label="Feedback Shared Through"
+              placeholder="Mention Name or (Self)"
             />
             <InputBox label="Incharge Name" placeholder="Enter Incharge Name" />
-            <InputBox label="Priority" placeholder="Set Priority" />
             <InputBox
               label="Explain your Problem"
               placeholder="Explain your Problem in detail."
             />
+
+            {/* Date Picker Input */}
+            <Text style={styles.label}>Select Date</Text>
+            <TouchableOpacity
+              style={styles.dateInput}
+              onPress={() => setShowDatePicker(true)}
+            >
+              <Feather name="calendar" size={20} color={colors.primary} />
+              <Text style={styles.dateText}>
+                {date.toLocaleDateString("en-GB")}
+              </Text>
+            </TouchableOpacity>
+
+            {/* Date Picker Component */}
+            {showDatePicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+                themeVariant="dark"
+              />
+            )}
           </View>
 
           {/* Upload Photo Button */}
@@ -99,6 +131,27 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 15,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: colors.primary,
+    marginBottom: 5,
+  },
+  dateInput: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+    padding: 12,
+    borderRadius: 10,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    marginBottom: 15,
+  },
+  dateText: {
+    marginLeft: 10,
+    fontSize: 16,
+    color: "#333",
   },
   uploadButton: {
     flexDirection: "row",
