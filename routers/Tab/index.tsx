@@ -5,12 +5,8 @@ import { View, Text, StyleSheet } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../global/colors";
 import HomeScreen from "../../screens/Home";
+import Dashboard from "../../screens/Dashboard";
 
-const DashboardScreen = () => (
-  <View style={styles.screen}>
-    <Text>Dashboard Screen</Text>
-  </View>
-);
 const AssignTaskScreen = () => (
   <View style={styles.screen}>
     <Text>Assign Task Screen</Text>
@@ -79,7 +75,7 @@ const BottomTabNavigator = () => {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Dashboard" component={DashboardScreen} />
+      <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Assign Task" component={AssignTaskScreen} />
       <Tab.Screen name="Profile" component={AccountScreen} />
     </Tab.Navigator>

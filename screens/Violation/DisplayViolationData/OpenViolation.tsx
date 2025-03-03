@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Feather } from "@expo/vector-icons"; // Import Feather icons
+import { AntDesign, Feather } from "@expo/vector-icons"; // Import Feather icons
 import { colors } from "../../../global/colors";
+import Kapa from "../ViolationForm/Kapa";
 
-const InvoiceCard = ({ title, count, date }) => {
-  const [expanded, setExpanded] = useState(false);
+const InvoiceCard = ({ title, count, date, onPress }) => {
+  const [expanded, setExpanded] = useState(true);
 
   return (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => setExpanded(!expanded)}
-    >
+    <TouchableOpacity onPress={() => onPress(title, date)} style={styles.card}>
       <View style={styles.cardHeader}>
         {/* Expand Icon */}
         <Feather
@@ -34,14 +32,22 @@ const InvoiceCard = ({ title, count, date }) => {
 
         {/* Edit Button */}
         <TouchableOpacity>
-          <Text style={styles.editText}>KAPA</Text>
+          <Text style={styles.editText}>E22</Text>
         </TouchableOpacity>
       </View>
 
       {/* Expandable Content */}
       {expanded && (
         <View style={styles.content}>
-          <Text>Invoice Details...</Text>
+          <Text
+            style={{
+              fontWeight: "600",
+              color: colors.success,
+            }}
+          >
+            KAPA Report
+          </Text>
+          <AntDesign name="arrowright" size={20} color={colors.success} />
         </View>
       )}
     </TouchableOpacity>
@@ -49,10 +55,38 @@ const InvoiceCard = ({ title, count, date }) => {
 };
 
 const OpenViolation = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedTitle, setSelectedTitle] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+
+  // Function to open modal with selected title
+  const handleOpenModal = (title, date) => {
+    setSelectedTitle(title);
+    setModalVisible(true);
+    setSelectedDate(date);
+  };
   return (
     <View style={styles.container}>
-      <InvoiceCard title="Line Walk" count={2} date="12-11-2024" />
-      <InvoiceCard title="TNT Audit" count={5} date="12-11-2024" />
+      <InvoiceCard
+        title="LWRMM02"
+        count={5}
+        date="12-11-2024"
+        onPress={handleOpenModal}
+      />
+      <InvoiceCard
+        title="LWRMM05"
+        count={5}
+        date="12-11-2024"
+        onPress={handleOpenModal}
+      />
+
+      {/* Closing Report Bottom Modal */}
+      <Kapa
+        isVisible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        selectedDate={selectedDate}
+        title={selectedTitle} // Pass selected title to modal
+      />
     </View>
   );
 };
@@ -113,6 +147,9 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#F9F9F9",
     borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });
 

@@ -87,7 +87,10 @@ const ViolationForm = ({ modalVisible, setModalVisible }) => {
               placeholder="Reported By (Person Name)"
             />
             <InputBox label="Victim Name" placeholder="Victim Name" />
-            <InputBox label="Comment" placeholder="Write an Comment" />
+            <InputBox
+              label="Violation Details"
+              placeholder="Write Violation in detail"
+            />
 
             <View>
               <TouchableOpacity style={styles.uploadButton}>

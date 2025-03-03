@@ -11,7 +11,7 @@ import { colors } from "../../../global/colors";
 import InputBox from "../../../components/InputBox";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-const Kapa = ({ isVisible, onClose, title, selectedDate }) => {
+const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -42,6 +42,14 @@ const Kapa = ({ isVisible, onClose, title, selectedDate }) => {
           <View style={styles.section}>
             <Text style={styles.label}>Logged Date</Text>
             <Text style={styles.value}>{selectedDate}</Text>
+          </View>
+
+          {/* Closing Report Input */}
+          <View style={styles.section}>
+            <InputBox
+              label="Closing Report"
+              placeholder="Enter the detailed Closing Report"
+            />
           </View>
 
           {/* Upload Button */}
@@ -88,11 +96,11 @@ const styles = StyleSheet.create({
     color: colors.danger,
   },
   label: {
-    fontSize: 12,
+    fontSize: 14,
     color: "gray",
   },
   value: {
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: "600",
     color: colors.secondary,
   },
@@ -129,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Kapa;
+export default ClosingReport;
