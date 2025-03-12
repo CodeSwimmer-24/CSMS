@@ -14,6 +14,7 @@ import FSGR from "./screens/FSGR";
 import Accidents from "./screens/Accidents";
 import Violation from "./screens/Violation";
 import DailyHouseKeeping from "./screens/ToolsBoxMeeting/Components/DailyHouseKeeping";
+import TbtHistory from "./screens/Dashboard/SafeJobExecution/TbtHistory";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -38,6 +39,7 @@ export default function App() {
         <Stack.Screen name="Accidents" component={Accidents} />
         <Stack.Screen name="Violation" component={Violation} />
         <Stack.Screen name="dailyHouseKeeping" component={DailyHouseKeeping} />
+        <Stack.Screen name="tbtHistory" component={TbtHistory} />
       </Stack.Navigator>
     </NavigationContainer>
   );

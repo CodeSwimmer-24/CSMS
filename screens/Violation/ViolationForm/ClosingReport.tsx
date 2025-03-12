@@ -55,7 +55,7 @@ const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
           {/* Upload Button */}
           <TouchableOpacity style={styles.uploadButton}>
             <Ionicons name="folder-open-outline" size={24} color="white" />
-            <Text style={styles.uploadText}>Upload Violation Image</Text>
+            <Text style={styles.uploadText}>Upload After Image</Text>
           </TouchableOpacity>
 
           {/* Submit Button */}
