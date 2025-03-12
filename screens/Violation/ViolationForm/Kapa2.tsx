@@ -25,15 +25,7 @@ const InfoRow = ({ label1, value1, label2, value2 }) => (
   </View>
 );
 
-const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
-  const preventiveActions = [
-    "Preventive Action One",
-    "Preventive Action Two",
-    "Preventive Action Three",
-    "Preventive Action Four",
-    "Preventive Action Five",
-  ];
-
+const Kapa2 = ({ isVisible, onClose, title, selectedDate }) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -48,7 +40,7 @@ const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.heading}>Closing Report</Text>
+            <Text style={styles.heading}>Level 2</Text>
             <TouchableOpacity onPress={onClose}>
               <Text style={styles.closeText}>CLOSE</Text>
             </TouchableOpacity>
@@ -81,56 +73,59 @@ const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
 
           {/* Violation Details */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Violation Details</Text>
+            <Text
+              style={[
+                styles.label,
+                {
+                  fontWeight: "600",
+                  fontSize: 15,
+                  color: colors.primary,
+                },
+              ]}
+            >
+              Violation Details
+            </Text>
             <Text style={styles.text}>
-              Detailed description of the violation...
+              At BrainCraft, we specialize in crafting custom websites,
+              e-commerce platforms, mobile apps, and tailored web solutions to
+              meet the unique needs of your business.
             </Text>
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.label}>Immediate Action Targeted Date</Text>
+            <Text style={styles.label}>Immmediate Action Targetted Date</Text>
             <Text style={styles.value}>12-March-2025</Text>
           </View>
 
-          {/* Immediate Action */}
+          {/* Immmediate Action */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Immediate Action</Text>
+            <Text
+              style={[
+                styles.label,
+                {
+                  fontWeight: "600",
+                  fontSize: 15,
+                  color: colors.primary,
+                },
+              ]}
+            >
+              Immmediate Action
+            </Text>
             <Text style={styles.text}>
-              Details about the immediate action taken...
+              At BrainCraft, we specialize in crafting custom websites,
+              e-commerce platforms, mobile apps, and tailored web solutions to
+              meet the unique needs of your business.
             </Text>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.label}>Root Cause Analysis Targeted Date</Text>
-            <Text style={styles.value}>12-March-2025</Text>
+          {/* Input Fields */}
+          <View style={{ marginTop: 20 }}>
+            <InputBox
+              placeholder="Root Cause Analysis"
+              label="Root Cause Analysis"
+            />
+            <InputBox placeholder="Target Date/Time" label="Target Date/Time" />
           </View>
-
-          {/* Root Cause Analysis */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Root Cause Analysis</Text>
-            <Text style={styles.text}>
-              Explanation of the root cause analysis...
-            </Text>
-          </View>
-
-          {/* Preventive Actions */}
-          <View style={styles.section}>
-            {preventiveActions.map((action, index) => (
-              <View key={index} style={[styles.section, { marginTop: 0 }]}>
-                <Text style={styles.preventiveTitle}>{action} Details</Text>
-                <InputBox placeholder="Remark" />
-                <View style={{ marginTop: -30 }}>
-                  <InputBox placeholder="Current Status" />
-                </View>
-              </View>
-            ))}
-          </View>
-
-          <TouchableOpacity style={styles.uploadButton}>
-            <Ionicons name="folder-open-outline" size={24} color="white" />
-            <Text style={styles.uploadText}>Upload Violation Image</Text>
-          </TouchableOpacity>
-
           {/* Submit Button */}
           <TouchableOpacity style={styles.submitButton}>
             <Ionicons name="checkmark-circle" size={24} color="white" />
@@ -173,17 +168,6 @@ const styles = StyleSheet.create({
   section: {
     marginTop: 20,
   },
-  sectionTitle: {
-    fontWeight: "600",
-    fontSize: 15,
-    color: colors.primary,
-  },
-  preventiveTitle: {
-    fontSize: 16,
-    color: colors.success,
-    fontWeight: "500",
-    marginBottom: -20,
-  },
   infoRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -215,18 +199,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
   },
-  uploadButton: {
-    flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: colors.secondary,
-    paddingVertical: 12,
-    borderRadius: 10,
-    elevation: 3,
-    marginTop: 0,
-    marginBottom: 0,
-    alignItems: "center",
-  },
-
   uploadText: {
     color: "white",
     fontWeight: "600",
@@ -234,4 +206,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ClosingReport;
+export default Kapa2;

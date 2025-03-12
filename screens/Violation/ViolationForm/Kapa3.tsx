@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -25,14 +25,20 @@ const InfoRow = ({ label1, value1, label2, value2 }) => (
   </View>
 );
 
-const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
-  const preventiveActions = [
-    "Preventive Action One",
-    "Preventive Action Two",
-    "Preventive Action Three",
-    "Preventive Action Four",
-    "Preventive Action Five",
-  ];
+const Kapa3 = ({ isVisible, onClose, title, selectedDate }) => {
+  const [preventiveActions, setPreventiveActions] = useState([{ id: 1 }]);
+
+  // Add new Preventive Action field
+  const addPreventiveAction = () => {
+    setPreventiveActions([...preventiveActions, { id: Date.now() }]);
+  };
+
+  // Remove Preventive Action field
+  const removePreventiveAction = (id) => {
+    setPreventiveActions(
+      preventiveActions.filter((action) => action.id !== id)
+    );
+  };
 
   return (
     <Modal
@@ -48,7 +54,7 @@ const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.heading}>Closing Report</Text>
+            <Text style={styles.heading}>Level 3</Text>
             <TouchableOpacity onPress={onClose}>
               <Text style={styles.closeText}>CLOSE</Text>
             </TouchableOpacity>
@@ -83,7 +89,9 @@ const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Violation Details</Text>
             <Text style={styles.text}>
-              Detailed description of the violation...
+              At BrainCraft, we specialize in crafting custom websites,
+              e-commerce platforms, mobile apps, and tailored web solutions to
+              meet the unique needs of your business.
             </Text>
           </View>
 
@@ -96,7 +104,9 @@ const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Immediate Action</Text>
             <Text style={styles.text}>
-              Details about the immediate action taken...
+              At BrainCraft, we specialize in crafting custom websites,
+              e-commerce platforms, mobile apps, and tailored web solutions to
+              meet the unique needs of your business.
             </Text>
           </View>
 
@@ -109,27 +119,46 @@ const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Root Cause Analysis</Text>
             <Text style={styles.text}>
-              Explanation of the root cause analysis...
+              At BrainCraft, we specialize in crafting custom websites,
+              e-commerce platforms, mobile apps, and tailored web solutions to
+              meet the unique needs of your business.
             </Text>
           </View>
 
-          {/* Preventive Actions */}
-          <View style={styles.section}>
-            {preventiveActions.map((action, index) => (
-              <View key={index} style={[styles.section, { marginTop: 0 }]}>
-                <Text style={styles.preventiveTitle}>{action} Details</Text>
-                <InputBox placeholder="Remark" />
-                <View style={{ marginTop: -30 }}>
-                  <InputBox placeholder="Current Status" />
+          {/* Dynamic Preventive Actions */}
+          <View style={{ marginTop: 20 }}>
+            <Text style={styles.sectionTitle}>Preventive Actions</Text>
+
+            {preventiveActions.map((action) => (
+              <View key={action.id} style={styles.preventiveActionRow}>
+                <View style={{ flex: 1, marginTop: -30 }}>
+                  <InputBox
+                    placeholder="Preventive Action"
+                    //   label="Preventive Action"
+                  />
                 </View>
+                <TouchableOpacity
+                  onPress={() => removePreventiveAction(action.id)}
+                  style={styles.deleteButton}
+                >
+                  <Ionicons
+                    name="close-circle"
+                    size={24}
+                    color={colors.danger}
+                  />
+                </TouchableOpacity>
               </View>
             ))}
-          </View>
 
-          <TouchableOpacity style={styles.uploadButton}>
-            <Ionicons name="folder-open-outline" size={24} color="white" />
-            <Text style={styles.uploadText}>Upload Violation Image</Text>
-          </TouchableOpacity>
+            {/* Add New Preventive Action Button */}
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={addPreventiveAction}
+            >
+              <Ionicons name="add-circle" size={24} color={colors.success} />
+              <Text style={styles.addButtonText}>Add Preventive Action</Text>
+            </TouchableOpacity>
+          </View>
 
           {/* Submit Button */}
           <TouchableOpacity style={styles.submitButton}>
@@ -173,17 +202,6 @@ const styles = StyleSheet.create({
   section: {
     marginTop: 20,
   },
-  sectionTitle: {
-    fontWeight: "600",
-    fontSize: 15,
-    color: colors.primary,
-  },
-  preventiveTitle: {
-    fontSize: 16,
-    color: colors.success,
-    fontWeight: "500",
-    marginBottom: -20,
-  },
   infoRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -198,11 +216,36 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.secondary,
   },
+  sectionTitle: {
+    fontWeight: "600",
+    fontSize: 15,
+    color: colors.primary,
+    marginBottom: 10,
+  },
   text: {
     fontSize: 14,
     fontWeight: "300",
     color: "#505050",
     lineHeight: 20,
+  },
+  preventiveActionRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  deleteButton: {
+    marginLeft: 10,
+  },
+  addButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  addButtonText: {
+    marginLeft: 5,
+    color: colors.success,
+    fontWeight: "600",
   },
   submitButton: {
     flexDirection: "row",
@@ -215,18 +258,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
   },
-  uploadButton: {
-    flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: colors.secondary,
-    paddingVertical: 12,
-    borderRadius: 10,
-    elevation: 3,
-    marginTop: 0,
-    marginBottom: 0,
-    alignItems: "center",
-  },
-
   uploadText: {
     color: "white",
     fontWeight: "600",
@@ -234,4 +265,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ClosingReport;
+export default Kapa3;

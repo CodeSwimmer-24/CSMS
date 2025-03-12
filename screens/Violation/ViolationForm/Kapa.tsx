@@ -11,11 +11,25 @@ import { colors } from "../../../global/colors";
 import InputBox from "../../../components/InputBox";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
+// Reusable Row Component
+const InfoRow = ({ label1, value1, label2, value2 }) => (
+  <View style={styles.infoRow}>
+    <View style={styles.section}>
+      <Text style={styles.label}>{label1}</Text>
+      <Text style={styles.value}>{value1}</Text>
+    </View>
+    <View style={styles.section}>
+      <Text style={styles.label}>{label2}</Text>
+      <Text style={styles.value}>{value2}</Text>
+    </View>
+  </View>
+);
+
 const Kapa = ({ isVisible, onClose, title, selectedDate }) => {
   return (
     <Modal
       isVisible={isVisible}
-      onBackdropPress={onClose} // Close when tapping outside
+      onBackdropPress={onClose}
       animationIn="slideInUp"
       animationOut="slideOutDown"
       backdropOpacity={0.5}
@@ -25,30 +39,54 @@ const Kapa = ({ isVisible, onClose, title, selectedDate }) => {
       <View style={styles.modalContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* Header */}
-          <View style={styles.close}>
-            <Text style={styles.heading}>Close Report</Text>
-            <TouchableOpacity onPress={() => onClose()}>
+          <View style={styles.header}>
+            <Text style={styles.heading}>Level 1</Text>
+            <TouchableOpacity onPress={onClose}>
               <Text style={styles.closeText}>CLOSE</Text>
             </TouchableOpacity>
           </View>
 
-          {/* Referral ID */}
+          {/* Details */}
           <View style={styles.section}>
             <Text style={styles.label}>Referral ID</Text>
             <Text style={styles.value}>{title}</Text>
           </View>
 
-          {/* Logged Date */}
+          <InfoRow
+            label1="Logged Date"
+            value1={selectedDate}
+            label2="Location"
+            value2="RMM E22"
+          />
+          <InfoRow
+            label1="During"
+            value1="Line Walk"
+            label2="Severity"
+            value2="5"
+          />
+          <InfoRow
+            label1="Reported By"
+            value1="Anil Kumar"
+            label2="Victim Name"
+            value2="Suraj Kumar"
+          />
+
+          {/* Violation Details */}
           <View style={styles.section}>
-            <Text style={styles.label}>Logged Date</Text>
-            <Text style={styles.value}>{selectedDate}</Text>
+            <Text style={styles.label}>Violation Details</Text>
+            <Text style={styles.text}>
+              At BrainCraft, we specialize in crafting custom websites,
+              e-commerce platforms, mobile apps, and tailored web solutions to
+              meet the unique needs of your business. Whether you're looking to
+              create a stunning website, build a powerful online store, or
+              develop a mobile app that connects with your audience, we’ve got
+              you covered.
+            </Text>
           </View>
 
-          {/* Upload Button */}
-          <TouchableOpacity style={styles.uploadButton}>
-            <Ionicons name="folder-open-outline" size={24} color="white" />
-            <Text style={styles.uploadText}>Upload Violation Image</Text>
-          </TouchableOpacity>
+          {/* Input Fields */}
+          <InputBox placeholder="Immediate Action" label="Immediate Action" />
+          <InputBox placeholder="Target Date/Time" label="Target Date/Time" />
 
           {/* Submit Button */}
           <TouchableOpacity style={styles.submitButton}>
@@ -64,28 +102,38 @@ const Kapa = ({ isVisible, onClose, title, selectedDate }) => {
 // Styles
 const styles = StyleSheet.create({
   modal: {
-    justifyContent: "flex-end", // Positions at the bottom
-    margin: 0, // Removes default margins
+    justifyContent: "flex-end",
+    margin: 0,
   },
   modalContainer: {
-    height: "70%", // Takes up 70% of screen height
+    height: "95%",
     backgroundColor: "white",
     padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   heading: {
     fontSize: 22,
     color: colors.primary,
     fontWeight: "bold",
   },
-  section: {
-    marginTop: 20,
-  },
   closeText: {
     fontSize: 16,
     fontWeight: "600",
     color: colors.danger,
+  },
+  section: {
+    marginTop: 20,
+  },
+  infoRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   label: {
     fontSize: 12,
@@ -96,20 +144,11 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.secondary,
   },
-  close: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  uploadButton: {
-    flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: colors.secondary,
-    paddingVertical: 12,
-    borderRadius: 10,
-    elevation: 3,
-    marginTop: 20,
-    alignItems: "center",
+  text: {
+    fontSize: 14,
+    fontWeight: "300",
+    color: colors.secondary,
+    lineHeight: 20,
   },
   submitButton: {
     flexDirection: "row",
@@ -118,7 +157,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 10,
     elevation: 3,
-    marginTop: 40,
+    marginTop: 20,
     marginBottom: 20,
     alignItems: "center",
   },

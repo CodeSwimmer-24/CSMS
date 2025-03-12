@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign, Feather } from "@expo/vector-icons"; // Import Feather icons
 import { colors } from "../../../global/colors";
-import Kapa from "../ViolationForm/Kapa";
+import Kapa3 from "../ViolationForm/Kapa3";
 
 const InvoiceCard = ({ title, count, date, onPress }) => {
   const [expanded, setExpanded] = useState(true);
@@ -45,7 +45,7 @@ const InvoiceCard = ({ title, count, date, onPress }) => {
               color: colors.success,
             }}
           >
-            Immediate Action
+            Root Cause Analysis
           </Text>
           <AntDesign name="arrowright" size={20} color={colors.success} />
         </View>
@@ -54,7 +54,7 @@ const InvoiceCard = ({ title, count, date, onPress }) => {
   );
 };
 
-const OpenViolation = () => {
+const Leavel3 = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedTitle, setSelectedTitle] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -81,7 +81,7 @@ const OpenViolation = () => {
       />
 
       {/* Closing Report Bottom Modal */}
-      <Kapa
+      <Kapa3
         isVisible={isModalVisible}
         onClose={() => setModalVisible(false)}
         selectedDate={selectedDate}
@@ -153,4 +153,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OpenViolation;
+export default Leavel3;

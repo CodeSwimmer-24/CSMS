@@ -12,8 +12,51 @@ import InputBox from "../../../components/InputBox";
 import { Picker } from "@react-native-picker/picker";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
+const pickerOptions = [
+  {
+    label: "Form Type",
+    state: "formType",
+    options: [
+      { label: "Violation", value: "Violation" },
+      { label: "Good Observation", value: "Good Observation" },
+    ],
+  },
+  {
+    label: "During",
+    state: "during",
+    options: [
+      { label: "Daily Observation", value: "Daily Observation" },
+      { label: "Line Walk", value: "Line Walk" },
+      { label: "PPE Audit", value: "PPE Audit" },
+      { label: "SSS Audit", value: "SSS Audit" },
+      { label: "5S House Keeping Audit", value: "5S House Keeping Audit" },
+      { label: "Store Audit", value: "Store Audit" },
+    ],
+  },
+  {
+    label: "Severity",
+    state: "severity",
+    options: [
+      { label: "0", value: "0" },
+      { label: "1", value: "1" },
+      { label: "2", value: "2" },
+      { label: "3", value: "3" },
+      { label: "4", value: "4" },
+      { label: "5", value: "5" },
+    ],
+  },
+];
+
 const ViolationForm = ({ modalVisible, setModalVisible }) => {
-  const [accidentType, setAccidentType] = useState("Accident");
+  const [formValues, setFormValues] = useState({
+    formType: "Violation",
+    during: "Daily Observation",
+    severity: "0",
+  });
+
+  const handlePickerChange = (key, value) => {
+    setFormValues((prev) => ({ ...prev, [key]: value }));
+  };
 
   return (
     <Modal
@@ -27,57 +70,28 @@ const ViolationForm = ({ modalVisible, setModalVisible }) => {
           <ScrollView contentContainerStyle={styles.modalContent}>
             <Text style={styles.modalTitle}>Violation / Good Observation</Text>
 
-            <View style={styles.pickerContainer}>
-              <Text style={styles.pickerLabel}>Form Type</Text>
-              <View style={styles.pickerWrapper}>
-                <Picker
-                  selectedValue={accidentType}
-                  onValueChange={(itemValue) => setAccidentType(itemValue)}
-                  style={styles.picker}
-                >
-                  <Picker.Item label="Violation" value="Violation" />
-                  <Picker.Item
-                    label="Good Observation"
-                    value="Good Observation"
-                  />
-                </Picker>
+            {pickerOptions.map(({ label, state, options }) => (
+              <View key={state} style={styles.pickerContainer}>
+                <Text style={styles.pickerLabel}>{label}</Text>
+                <View style={styles.pickerWrapper}>
+                  <Picker
+                    selectedValue={formValues[state]}
+                    onValueChange={(value) => handlePickerChange(state, value)}
+                    style={styles.picker}
+                  >
+                    {options.map((option) => (
+                      <Picker.Item
+                        key={option.value}
+                        label={option.label}
+                        value={option.value}
+                      />
+                    ))}
+                  </Picker>
+                </View>
               </View>
-            </View>
-            <View style={styles.pickerContainer}>
-              <Text style={styles.pickerLabel}>During</Text>
-              <View style={styles.pickerWrapper}>
-                <Picker
-                  selectedValue={accidentType}
-                  onValueChange={(itemValue) => setAccidentType(itemValue)}
-                  style={styles.picker}
-                >
-                  <Picker.Item
-                    label="Daily Observation"
-                    value="Daily Observation"
-                  />
-                  <Picker.Item label="Line Walk" value="Line Walk" />
-                </Picker>
-              </View>
-            </View>
-            <View style={styles.pickerContainer}>
-              <Text style={styles.pickerLabel}>Severity</Text>
-              <View style={styles.pickerWrapper}>
-                <Picker
-                  selectedValue={accidentType}
-                  onValueChange={(itemValue) => setAccidentType(itemValue)}
-                  style={styles.picker}
-                >
-                  <Picker.Item label="0" value="0" />
-                  <Picker.Item label="1" value="1" />
-                  <Picker.Item label="2" value="2" />
-                  <Picker.Item label="3" value="3" />
-                  <Picker.Item label="4" value="4" />
-                  <Picker.Item label="5" value="5" />
-                </Picker>
-              </View>
-            </View>
+            ))}
 
-            <InputBox label="Violation Date" placeholder="Violaton Date" />
+            <InputBox label="Violation Date" placeholder="Violation Date" />
             <InputBox
               label="Violation Location"
               placeholder="Violation Location"
@@ -92,12 +106,10 @@ const ViolationForm = ({ modalVisible, setModalVisible }) => {
               placeholder="Write Violation in detail"
             />
 
-            <View>
-              <TouchableOpacity style={styles.uploadButton}>
-                <Ionicons name="folder-open-outline" size={24} color="white" />
-                <Text style={styles.uploadText}>Upload Violation Image</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.uploadButton}>
+              <Ionicons name="folder-open-outline" size={24} color="white" />
+              <Text style={styles.uploadText}>Upload Violation Image</Text>
+            </TouchableOpacity>
 
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -143,8 +155,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   pickerContainer: {
-    marginBottom: 0,
-    marginTop: 0,
+    marginBottom: 10,
   },
   pickerLabel: {
     fontSize: 16,
@@ -154,10 +165,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   pickerWrapper: {
-    borderWidth: 1, // Add border width
+    borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 10, // Apply border radius
-    overflow: "hidden", // Ensure the border radius is applied
+    borderRadius: 10,
+    overflow: "hidden",
   },
   picker: {
     height: 50,

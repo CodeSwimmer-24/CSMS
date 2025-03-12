@@ -12,18 +12,26 @@ import { colors } from "../../global/colors";
 import ViolationForm from "./ViolationForm/ViolationForm";
 import OpenViolation from "./DisplayViolationData/OpenViolation";
 import CloseViolation from "./DisplayViolationData/CloseViolation";
+import Kapa2 from "./ViolationForm/Kapa2";
+import Kapa3 from "./ViolationForm/Kapa3";
+import Leavel2 from "./DisplayViolationData/Leavel2";
+import Leavel3 from "./DisplayViolationData/Leavel3";
 
 // Tab View
 const Violation = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "logged", title: "Open Violations" },
-    { key: "closed", title: "Close Violations" },
+    { key: "leavel1", title: "Leavel 1" },
+    { key: "leavel2", title: "Leavel 2" },
+    { key: "leavel3", title: "Leavel 3" },
+    { key: "leavel4", title: "Close" },
   ]);
 
   const renderScene = SceneMap({
-    logged: OpenViolation,
-    closed: CloseViolation,
+    leavel1: OpenViolation,
+    leavel2: Leavel2,
+    leavel3: Leavel3,
+    leavel4: CloseViolation,
   });
 
   const [modalVisible, setModalVisible] = useState(false);
