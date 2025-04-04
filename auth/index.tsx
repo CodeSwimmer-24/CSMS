@@ -1,23 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image,
   StatusBar,
 } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Modal from "react-native-modal";
 import InputBox from "../components/InputBox";
 import { colors } from "../global/colors";
 import Button from "../components/Button";
-import { useNavigation } from "@react-navigation/native";
+import WistleBlow from "./WistleBlow/WistleBlow";
 
 const RegisterScreen = () => {
-  const navigation = useNavigation();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   return (
     <View style={styles.container}>
@@ -52,13 +54,18 @@ const RegisterScreen = () => {
       </View>
 
       <View style={styles.socialContainer}>
-        <TouchableOpacity style={styles.socialButton}>
-          <FontAwesome6 name="whatsapp" size={26} color={colors.primary} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton}>
-          <MaterialIcons name="call" size={26} color={colors.primary} />
+        <TouchableOpacity style={styles.socialButton} onPress={toggleModal}>
+          <MaterialCommunityIcons
+            name="whistle-outline"
+            size={20}
+            color={colors.primary}
+          />
+          <Text style={styles.whistleblow}>Whistle Blow</Text>
         </TouchableOpacity>
       </View>
+      {isModalVisible && (
+        <WistleBlow isModalVisible={isModalVisible} toggleModal={toggleModal} />
+      )}
     </View>
   );
 };
@@ -86,34 +93,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginTop: 20,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: "400",
-    marginBottom: 5,
-    color: colors.primary,
-  },
-  input: {
-    height: 50,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-  },
-  registerButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: 14,
-    borderRadius: 5,
-    alignItems: "center",
-    marginBottom: 15,
-    elevation: 5,
-    marginTop: 20,
-  },
-  registerButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
   orContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -139,25 +118,19 @@ const styles = StyleSheet.create({
   },
   socialButton: {
     marginHorizontal: 10,
-    padding: 10,
-    width: "45%",
+    padding: 12,
+    width: "95%",
     backgroundColor: "#e9ecef",
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
   },
-  iconImage: {
-    width: 24,
-    height: 24,
-  },
-  footerText: {
-    textAlign: "center",
-    color: "#888",
+  whistleblow: {
     fontSize: 16,
-  },
-  loginText: {
-    color: "#00aaff",
     fontWeight: "600",
+    color: colors.primary,
+    marginLeft: 10,
   },
 });
 

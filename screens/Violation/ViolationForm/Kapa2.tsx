@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,8 +10,8 @@ import Modal from "react-native-modal";
 import { colors } from "../../../global/colors";
 import InputBox from "../../../components/InputBox";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Entypo } from "@expo/vector-icons";
 
-// Reusable Row Component
 const InfoRow = ({ label1, value1, label2, value2 }) => (
   <View style={styles.infoRow}>
     <View style={styles.section}>
@@ -26,6 +26,9 @@ const InfoRow = ({ label1, value1, label2, value2 }) => (
 );
 
 const Kapa2 = ({ isVisible, onClose, title, selectedDate }) => {
+  const [showViolationDetails, setShowViolationDetails] = useState(false);
+  const [showImmediateAction, setShowImmediateAction] = useState(false);
+
   return (
     <Modal
       isVisible={isVisible}
@@ -38,7 +41,6 @@ const Kapa2 = ({ isVisible, onClose, title, selectedDate }) => {
     >
       <View style={styles.modalContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* Header */}
           <View style={styles.header}>
             <Text style={styles.heading}>Level 2</Text>
             <TouchableOpacity onPress={onClose}>
@@ -46,7 +48,6 @@ const Kapa2 = ({ isVisible, onClose, title, selectedDate }) => {
             </TouchableOpacity>
           </View>
 
-          {/* Details */}
           <View style={styles.section}>
             <Text style={styles.label}>Referral ID</Text>
             <Text style={styles.value}>{title}</Text>
@@ -71,54 +72,63 @@ const Kapa2 = ({ isVisible, onClose, title, selectedDate }) => {
             value2="Suraj Kumar"
           />
 
-          {/* Violation Details */}
-          <View style={styles.section}>
-            <Text
-              style={[
-                styles.label,
-                {
-                  fontWeight: "600",
-                  fontSize: 15,
-                  color: colors.primary,
-                },
-              ]}
-            >
-              Violation Details
-            </Text>
-            <Text style={styles.text}>
-              At BrainCraft, we specialize in crafting custom websites,
-              e-commerce platforms, mobile apps, and tailored web solutions to
-              meet the unique needs of your business.
-            </Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => setShowViolationDetails(!showViolationDetails)}
+            style={styles.toggleButton}
+          >
+            <View style={styles.toggleHeader}>
+              <Text style={styles.toggleButtonText}>
+                {showViolationDetails
+                  ? "Hide Violation Details"
+                  : "View Violation Details"}
+              </Text>
+              <Entypo
+                name={
+                  showViolationDetails ? "chevron-thin-up" : "chevron-thin-down"
+                }
+                size={20}
+                color={colors.primary}
+              />
+            </View>
+            {showViolationDetails && (
+              <Text style={styles.text}>
+                At BrainCraft, we specialize in crafting custom websites,
+                e-commerce platforms, mobile apps, and tailored web solutions to
+                meet the unique needs of your business.
+              </Text>
+            )}
+          </TouchableOpacity>
 
-          <View style={styles.section}>
-            <Text style={styles.label}>Immmediate Action Targetted Date</Text>
-            <Text style={styles.value}>12-March-2025</Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => setShowImmediateAction(!showImmediateAction)}
+            style={styles.toggleButton}
+          >
+            <View style={styles.toggleHeader}>
+              <Text style={styles.toggleButtonText}>
+                {showImmediateAction
+                  ? "Hide Immediate Action"
+                  : "View Immediate Action"}
+              </Text>
+              <Entypo
+                name={
+                  showImmediateAction ? "chevron-thin-up" : "chevron-thin-down"
+                }
+                size={20}
+                color={colors.primary}
+              />
+            </View>
+            {showImmediateAction && (
+              <Text style={styles.text}>
+                <Text>
+                  12-March-2025. ~{"\n"} {"\n"} At BrainCraft, we specialize in
+                  crafting custom websites, e-commerce platforms, mobile apps,
+                  and tailored web solutions to meet the unique needs of your
+                  business.
+                </Text>
+              </Text>
+            )}
+          </TouchableOpacity>
 
-          {/* Immmediate Action */}
-          <View style={styles.section}>
-            <Text
-              style={[
-                styles.label,
-                {
-                  fontWeight: "600",
-                  fontSize: 15,
-                  color: colors.primary,
-                },
-              ]}
-            >
-              Immmediate Action
-            </Text>
-            <Text style={styles.text}>
-              At BrainCraft, we specialize in crafting custom websites,
-              e-commerce platforms, mobile apps, and tailored web solutions to
-              meet the unique needs of your business.
-            </Text>
-          </View>
-
-          {/* Input Fields */}
           <View style={{ marginTop: 20 }}>
             <InputBox
               placeholder="Root Cause Analysis"
@@ -126,7 +136,7 @@ const Kapa2 = ({ isVisible, onClose, title, selectedDate }) => {
             />
             <InputBox placeholder="Target Date/Time" label="Target Date/Time" />
           </View>
-          {/* Submit Button */}
+
           <TouchableOpacity style={styles.submitButton}>
             <Ionicons name="checkmark-circle" size={24} color="white" />
             <Text style={styles.uploadText}>Submit Report</Text>
@@ -137,12 +147,8 @@ const Kapa2 = ({ isVisible, onClose, title, selectedDate }) => {
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
-  modal: {
-    justifyContent: "flex-end",
-    margin: 0,
-  },
+  modal: { justifyContent: "flex-end", margin: 0 },
   modalContainer: {
     height: "99%",
     backgroundColor: "white",
@@ -155,38 +161,37 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  heading: {
-    fontSize: 22,
-    color: colors.primary,
-    fontWeight: "bold",
-  },
-  closeText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.danger,
-  },
-  section: {
-    marginTop: 20,
-  },
+  heading: { fontSize: 22, color: colors.primary, fontWeight: "bold" },
+  closeText: { fontSize: 16, fontWeight: "600", color: colors.danger },
+  section: { marginTop: 20 },
   infoRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  label: {
-    fontSize: 12,
-    color: "gray",
-  },
-  value: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.secondary,
-  },
+  label: { fontSize: 12, color: "gray" },
+  value: { fontSize: 16, fontWeight: "600", color: colors.secondary },
   text: {
     fontSize: 14,
     fontWeight: "300",
     color: "#505050",
     lineHeight: 20,
+    marginTop: 10,
+  },
+  toggleButton: {
+    justifyContent: "space-between",
+    paddingVertical: 12,
+    borderWidth: 1,
+    borderColor: "lightgray",
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  toggleButtonText: { fontSize: 14, fontWeight: "600", color: colors.primary },
+  toggleHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   submitButton: {
     flexDirection: "row",
@@ -199,11 +204,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
   },
-  uploadText: {
-    color: "white",
-    fontWeight: "600",
-    marginLeft: 10,
-  },
+  uploadText: { color: "white", fontWeight: "600", marginLeft: 10 },
 });
 
 export default Kapa2;

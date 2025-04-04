@@ -18,6 +18,7 @@ const InfoRow = ({ label1, value1, label2, value2 }) => (
       <Text style={styles.label}>{label1}</Text>
       <Text style={styles.value}>{value1}</Text>
     </View>
+    =
     <View style={styles.section}>
       <Text style={styles.label}>{label2}</Text>
       <Text style={styles.value}>{value2}</Text>

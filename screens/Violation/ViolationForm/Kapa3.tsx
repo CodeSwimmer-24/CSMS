@@ -10,8 +10,8 @@ import Modal from "react-native-modal";
 import { colors } from "../../../global/colors";
 import InputBox from "../../../components/InputBox";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Entypo } from "@expo/vector-icons";
 
-// Reusable Row Component
 const InfoRow = ({ label1, value1, label2, value2 }) => (
   <View style={styles.infoRow}>
     <View style={styles.section}>
@@ -26,14 +26,15 @@ const InfoRow = ({ label1, value1, label2, value2 }) => (
 );
 
 const Kapa3 = ({ isVisible, onClose, title, selectedDate }) => {
+  const [showViolationDetails, setShowViolationDetails] = useState(false);
+  const [showImmediateAction, setShowImmediateAction] = useState(false);
+  const [showRootCause, setShowRootCause] = useState(false);
   const [preventiveActions, setPreventiveActions] = useState([{ id: 1 }]);
 
-  // Add new Preventive Action field
   const addPreventiveAction = () => {
     setPreventiveActions([...preventiveActions, { id: Date.now() }]);
   };
 
-  // Remove Preventive Action field
   const removePreventiveAction = (id) => {
     setPreventiveActions(
       preventiveActions.filter((action) => action.id !== id)
@@ -52,7 +53,6 @@ const Kapa3 = ({ isVisible, onClose, title, selectedDate }) => {
     >
       <View style={styles.modalContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* Header */}
           <View style={styles.header}>
             <Text style={styles.heading}>Level 3</Text>
             <TouchableOpacity onPress={onClose}>
@@ -60,7 +60,6 @@ const Kapa3 = ({ isVisible, onClose, title, selectedDate }) => {
             </TouchableOpacity>
           </View>
 
-          {/* Details */}
           <View style={styles.section}>
             <Text style={styles.label}>Referral ID</Text>
             <Text style={styles.value}>{title}</Text>
@@ -85,57 +84,73 @@ const Kapa3 = ({ isVisible, onClose, title, selectedDate }) => {
             value2="Suraj Kumar"
           />
 
-          {/* Violation Details */}
-          <View style={styles.section}>
+          <TouchableOpacity
+            onPress={() => setShowViolationDetails(!showViolationDetails)}
+            style={styles.toggleButton}
+          >
             <Text style={styles.sectionTitle}>Violation Details</Text>
-            <Text style={styles.text}>
-              At BrainCraft, we specialize in crafting custom websites,
-              e-commerce platforms, mobile apps, and tailored web solutions to
-              meet the unique needs of your business.
-            </Text>
-          </View>
+            <Entypo
+              name={
+                showViolationDetails ? "chevron-thin-up" : "chevron-thin-down"
+              }
+              size={20}
+              color={colors.primary}
+            />
+          </TouchableOpacity>
+          {showViolationDetails && (
+            <View style={styles.box}>
+              <Text style={styles.text}>
+                Violation description goes here...
+              </Text>
+            </View>
+          )}
 
-          <View style={styles.section}>
-            <Text style={styles.label}>Immediate Action Targeted Date</Text>
-            <Text style={styles.value}>12-March-2025</Text>
-          </View>
-
-          {/* Immediate Action */}
-          <View style={styles.section}>
+          <TouchableOpacity
+            onPress={() => setShowImmediateAction(!showImmediateAction)}
+            style={styles.toggleButton}
+          >
             <Text style={styles.sectionTitle}>Immediate Action</Text>
-            <Text style={styles.text}>
-              At BrainCraft, we specialize in crafting custom websites,
-              e-commerce platforms, mobile apps, and tailored web solutions to
-              meet the unique needs of your business.
-            </Text>
-          </View>
+            <Entypo
+              name={
+                showImmediateAction ? "chevron-thin-up" : "chevron-thin-down"
+              }
+              size={20}
+              color={colors.primary}
+            />
+          </TouchableOpacity>
+          {showImmediateAction && (
+            <View style={styles.box}>
+              <Text style={styles.text}>
+                Immediate action details go here...
+              </Text>
+            </View>
+          )}
 
-          <View style={styles.section}>
-            <Text style={styles.label}>Root Cause Analysis Targeted Date</Text>
-            <Text style={styles.value}>12-March-2025</Text>
-          </View>
-
-          {/* Root Cause Analysis */}
-          <View style={styles.section}>
+          <TouchableOpacity
+            onPress={() => setShowRootCause(!showRootCause)}
+            style={styles.toggleButton}
+          >
             <Text style={styles.sectionTitle}>Root Cause Analysis</Text>
-            <Text style={styles.text}>
-              At BrainCraft, we specialize in crafting custom websites,
-              e-commerce platforms, mobile apps, and tailored web solutions to
-              meet the unique needs of your business.
-            </Text>
-          </View>
+            <Entypo
+              name={showRootCause ? "chevron-thin-up" : "chevron-thin-down"}
+              size={20}
+              color={colors.primary}
+            />
+          </TouchableOpacity>
+          {showRootCause && (
+            <View style={styles.box}>
+              <Text style={styles.text}>
+                Root cause analysis details go here...
+              </Text>
+            </View>
+          )}
 
-          {/* Dynamic Preventive Actions */}
           <View style={{ marginTop: 20 }}>
             <Text style={styles.sectionTitle}>Preventive Actions</Text>
-
             {preventiveActions.map((action) => (
               <View key={action.id} style={styles.preventiveActionRow}>
                 <View style={{ flex: 1, marginTop: -30 }}>
-                  <InputBox
-                    placeholder="Preventive Action"
-                    //   label="Preventive Action"
-                  />
+                  <InputBox placeholder="Preventive Action" />
                 </View>
                 <TouchableOpacity
                   onPress={() => removePreventiveAction(action.id)}
@@ -149,8 +164,6 @@ const Kapa3 = ({ isVisible, onClose, title, selectedDate }) => {
                 </TouchableOpacity>
               </View>
             ))}
-
-            {/* Add New Preventive Action Button */}
             <TouchableOpacity
               style={styles.addButton}
               onPress={addPreventiveAction}
@@ -160,7 +173,6 @@ const Kapa3 = ({ isVisible, onClose, title, selectedDate }) => {
             </TouchableOpacity>
           </View>
 
-          {/* Submit Button */}
           <TouchableOpacity style={styles.submitButton}>
             <Ionicons name="checkmark-circle" size={24} color="white" />
             <Text style={styles.uploadText}>Submit Report</Text>
@@ -171,12 +183,8 @@ const Kapa3 = ({ isVisible, onClose, title, selectedDate }) => {
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
-  modal: {
-    justifyContent: "flex-end",
-    margin: 0,
-  },
+  modal: { justifyContent: "flex-end", margin: 0 },
   modalContainer: {
     height: "99%",
     backgroundColor: "white",
@@ -189,51 +197,65 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  heading: {
-    fontSize: 22,
-    color: colors.primary,
-    fontWeight: "bold",
-  },
-  closeText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.danger,
-  },
-  section: {
-    marginTop: 20,
-  },
+  heading: { fontSize: 22, color: colors.primary, fontWeight: "bold" },
+  closeText: { fontSize: 16, fontWeight: "600", color: colors.danger },
+  section: { marginTop: 20 },
   infoRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  label: {
-    fontSize: 12,
-    color: "gray",
-  },
-  value: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.secondary,
-  },
+  label: { fontSize: 12, color: "gray" },
+  value: { fontSize: 16, fontWeight: "600", color: colors.secondary },
   sectionTitle: {
     fontWeight: "600",
     fontSize: 15,
     color: colors.primary,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
-  text: {
+
+  toggleText: {
     fontSize: 14,
-    fontWeight: "300",
-    color: "#505050",
-    lineHeight: 20,
+    fontWeight: "600",
+    color: colors.primary,
   },
   preventiveActionRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 10,
+    marginTop: 10,
   },
+  box: {
+    backgroundColor: "#f9f9f9",
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    marginTop: 5,
+  },
+  text: { fontSize: 14, fontWeight: "300", color: "#505050", lineHeight: 20 },
+  toggleButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: "lightgray",
+  },
+  submitButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    backgroundColor: colors.success,
+    paddingVertical: 12,
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  uploadText: { color: "white", fontWeight: "600", marginLeft: 10 },
   deleteButton: {
     marginLeft: 10,
   },
@@ -246,22 +268,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: colors.success,
     fontWeight: "600",
-  },
-  submitButton: {
-    flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: colors.success,
-    paddingVertical: 12,
-    borderRadius: 10,
-    elevation: 3,
-    marginTop: 20,
-    marginBottom: 20,
-    alignItems: "center",
-  },
-  uploadText: {
-    color: "white",
-    fontWeight: "600",
-    marginLeft: 10,
   },
 });
 

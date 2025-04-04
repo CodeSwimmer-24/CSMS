@@ -16,6 +16,7 @@ import Kapa2 from "./ViolationForm/Kapa2";
 import Kapa3 from "./ViolationForm/Kapa3";
 import Leavel2 from "./DisplayViolationData/Leavel2";
 import Leavel3 from "./DisplayViolationData/Leavel3";
+import Kapa from "./ViolationForm/Kapa";
 
 // Tab View
 const Violation = () => {
@@ -25,6 +26,9 @@ const Violation = () => {
     { key: "leavel2", title: "Leavel 2" },
     { key: "leavel3", title: "Leavel 3" },
     { key: "leavel4", title: "Close" },
+    { key: "month1", title: "Month 1" },
+    { key: "month2", title: "Month 2" },
+    { key: "month3", title: "Month 3" },
   ]);
 
   const renderScene = SceneMap({
@@ -32,6 +36,9 @@ const Violation = () => {
     leavel2: Leavel2,
     leavel3: Leavel3,
     leavel4: CloseViolation,
+    month1: Kapa,
+    month2: Kapa2,
+    month3: Kapa3,
   });
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,16 +55,15 @@ const Violation = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: Dimensions.get("window").width }}
         renderTabBar={(props) => (
-          <View style={{ backgroundColor: "red" }}>
-            {/* Default TabBar */}
-            <TabBar
-              {...props}
-              style={{ backgroundColor: colors.primary }} // 🔴 Change Tab Bar Color to Red
-              indicatorStyle={{ backgroundColor: "white" }} // Underline Indicator Color
-              activeColor="white" // Active Tab Text Color
-              inactiveColor="rgba(255, 255, 255, 0.7)" // Inactive Tab Text Color
-            />
-          </View>
+          <TabBar
+            {...props}
+            style={{ backgroundColor: colors.primary }}
+            indicatorStyle={{ backgroundColor: "white" }}
+            activeColor="white"
+            inactiveColor="rgba(255, 255, 255, 0.7)"
+            scrollEnabled={true} // ✅ Allows horizontal scrolling if tabs overflow
+            tabStyle={{ width: "auto" }} // ✅ Ensures each tab takes just enough space
+          />
         )}
       />
 

@@ -100,7 +100,7 @@ const ViolationForm = ({ modalVisible, setModalVisible }) => {
               label="Reported By"
               placeholder="Reported By (Person Name)"
             />
-            <InputBox label="Victim Name" placeholder="Victim Name" />
+            <InputBox label="Violator Name" placeholder="Violator Name" />
             <InputBox
               label="Violation Details"
               placeholder="Write Violation in detail"
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalContainer: {
-    height: "95%",
+    height: "100%",
     backgroundColor: "white",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

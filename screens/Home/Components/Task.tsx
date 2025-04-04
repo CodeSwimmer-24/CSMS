@@ -15,8 +15,9 @@ const settingsOptions = [
   },
   {
     id: 2,
-    title: "Create FSGR",
-    description: "Feedback, Suggation, Gravance, Report",
+    title: "Audits",
+    description:
+      "SSS Audit, Store Audit, PPE Audit, Line Walk Audit, Internal Audit",
     icon: "bonfire",
     color: "#E76F51",
     route: "FSGR",

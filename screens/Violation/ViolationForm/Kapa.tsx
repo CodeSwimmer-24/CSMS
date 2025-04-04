@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import Modal from "react-native-modal";
 import { colors } from "../../../global/colors";
 import InputBox from "../../../components/InputBox";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Entypo } from "@expo/vector-icons";
 
 // Reusable Row Component
 const InfoRow = ({ label1, value1, label2, value2 }) => (
@@ -26,6 +27,8 @@ const InfoRow = ({ label1, value1, label2, value2 }) => (
 );
 
 const Kapa = ({ isVisible, onClose, title, selectedDate }) => {
+  const [showDetails, setShowDetails] = useState(false);
+
   return (
     <Modal
       isVisible={isVisible}
@@ -71,22 +74,48 @@ const Kapa = ({ isVisible, onClose, title, selectedDate }) => {
             value2="Suraj Kumar"
           />
 
-          {/* Violation Details */}
+          {/* Violation Details Section */}
           <View style={styles.section}>
-            <Text style={styles.label}>Violation Details</Text>
-            <Text style={styles.text}>
-              At BrainCraft, we specialize in crafting custom websites,
-              e-commerce platforms, mobile apps, and tailored web solutions to
-              meet the unique needs of your business. Whether you're looking to
-              create a stunning website, build a powerful online store, or
-              develop a mobile app that connects with your audience, we’ve got
-              you covered.
-            </Text>
+            <TouchableOpacity
+              onPress={() => setShowDetails(!showDetails)}
+              style={styles.toggleButton}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={styles.toggleButtonText}>
+                  {showDetails
+                    ? "Hide Violation Details"
+                    : "View Violation Details"}
+                </Text>
+                <Entypo
+                  name={showDetails ? "chevron-thin-up" : "chevron-thin-down"}
+                  size={20}
+                  color={colors.primary}
+                />
+              </View>
+              {showDetails && (
+                <Text style={styles.text}>
+                  At BrainCraft, we specialize in crafting custom websites,
+                  e-commerce platforms, mobile apps, and tailored web solutions
+                  to meet the unique needs of your business. Whether you're
+                  looking to create a stunning website, build a powerful online
+                  store, or develop a mobile app that connects with your
+                  audience, we’ve got you covered.
+                </Text>
+              )}
+            </TouchableOpacity>
           </View>
 
           {/* Input Fields */}
-          <InputBox placeholder="Immediate Action" label="Immediate Action" />
-          <InputBox placeholder="Target Date/Time" label="Target Date/Time" />
+          <View style={styles.inputSection}>
+            <InputBox placeholder="Immediate Action" label="Immediate Action" />
+            <InputBox placeholder="Target Date/Time" label="Target Date/Time" />
+          </View>
 
           {/* Submit Button */}
           <TouchableOpacity style={styles.submitButton}>
@@ -144,11 +173,28 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.secondary,
   },
+  toggleButton: {
+    justifyContent: "space-between",
+    paddingVertical: 12,
+    borderWidth: 1,
+    borderColor: "lightgray",
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  toggleButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.primary,
+  },
   text: {
     fontSize: 14,
     fontWeight: "300",
     color: colors.secondary,
     lineHeight: 20,
+    marginTop: 10,
+  },
+  inputSection: {
+    marginTop: 20,
   },
   submitButton: {
     flexDirection: "row",
