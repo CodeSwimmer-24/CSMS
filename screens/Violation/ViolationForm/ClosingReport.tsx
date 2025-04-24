@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import Modal from "react-native-modal";
 import { colors } from "../../../global/colors";
 import InputBox from "../../../components/InputBox";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Entypo } from "@expo/vector-icons";
 
 // Reusable Row Component
 const InfoRow = ({ label1, value1, label2, value2 }) => (
@@ -18,7 +19,6 @@ const InfoRow = ({ label1, value1, label2, value2 }) => (
       <Text style={styles.label}>{label1}</Text>
       <Text style={styles.value}>{value1}</Text>
     </View>
-    =
     <View style={styles.section}>
       <Text style={styles.label}>{label2}</Text>
       <Text style={styles.value}>{value2}</Text>
@@ -34,6 +34,10 @@ const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
     "Preventive Action Four",
     "Preventive Action Five",
   ];
+
+  const [showViolationDetails, setShowViolationDetails] = useState(false);
+  const [showImmediateAction, setShowImmediateAction] = useState(false);
+  const [showRootCause, setShowRootCause] = useState(false);
 
   return (
     <Modal
@@ -81,38 +85,68 @@ const ClosingReport = ({ isVisible, onClose, title, selectedDate }) => {
           />
 
           {/* Violation Details */}
-          <View style={styles.section}>
+          <TouchableOpacity
+            onPress={() => setShowViolationDetails(!showViolationDetails)}
+            style={styles.toggleButton}
+          >
             <Text style={styles.sectionTitle}>Violation Details</Text>
-            <Text style={styles.text}>
-              Detailed description of the violation...
-            </Text>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.label}>Immediate Action Targeted Date</Text>
-            <Text style={styles.value}>12-March-2025</Text>
-          </View>
+            <Entypo
+              name={
+                showViolationDetails ? "chevron-thin-up" : "chevron-thin-down"
+              }
+              size={20}
+              color={colors.primary}
+            />
+          </TouchableOpacity>
+          {showViolationDetails && (
+            <View style={styles.box}>
+              <Text style={styles.text}>
+                Detailed description of the violation...
+              </Text>
+            </View>
+          )}
 
           {/* Immediate Action */}
-          <View style={styles.section}>
+          <TouchableOpacity
+            onPress={() => setShowImmediateAction(!showImmediateAction)}
+            style={styles.toggleButton}
+          >
             <Text style={styles.sectionTitle}>Immediate Action</Text>
-            <Text style={styles.text}>
-              Details about the immediate action taken...
-            </Text>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.label}>Root Cause Analysis Targeted Date</Text>
-            <Text style={styles.value}>12-March-2025</Text>
-          </View>
+            <Entypo
+              name={
+                showImmediateAction ? "chevron-thin-up" : "chevron-thin-down"
+              }
+              size={20}
+              color={colors.primary}
+            />
+          </TouchableOpacity>
+          {showImmediateAction && (
+            <View style={styles.box}>
+              <Text style={styles.text}>
+                Details about the immediate action taken...
+              </Text>
+            </View>
+          )}
 
           {/* Root Cause Analysis */}
-          <View style={styles.section}>
+          <TouchableOpacity
+            onPress={() => setShowRootCause(!showRootCause)}
+            style={styles.toggleButton}
+          >
             <Text style={styles.sectionTitle}>Root Cause Analysis</Text>
-            <Text style={styles.text}>
-              Explanation of the root cause analysis...
-            </Text>
-          </View>
+            <Entypo
+              name={showRootCause ? "chevron-thin-up" : "chevron-thin-down"}
+              size={20}
+              color={colors.primary}
+            />
+          </TouchableOpacity>
+          {showRootCause && (
+            <View style={styles.box}>
+              <Text style={styles.text}>
+                Explanation of the root cause analysis...
+              </Text>
+            </View>
+          )}
 
           {/* Preventive Actions */}
           <View style={styles.section}>
@@ -205,6 +239,25 @@ const styles = StyleSheet.create({
     color: "#505050",
     lineHeight: 20,
   },
+  toggleButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: "lightgray",
+  },
+  box: {
+    backgroundColor: "#f9f9f9",
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    marginTop: 5,
+  },
   submitButton: {
     flexDirection: "row",
     justifyContent: "center",
@@ -227,7 +280,6 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     alignItems: "center",
   },
-
   uploadText: {
     color: "white",
     fontWeight: "600",

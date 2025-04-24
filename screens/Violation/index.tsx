@@ -12,11 +12,13 @@ import { colors } from "../../global/colors";
 import ViolationForm from "./ViolationForm/ViolationForm";
 import OpenViolation from "./DisplayViolationData/OpenViolation";
 import CloseViolation from "./DisplayViolationData/CloseViolation";
-import Kapa2 from "./ViolationForm/Kapa2";
-import Kapa3 from "./ViolationForm/Kapa3";
+import Entypo from "@expo/vector-icons/Entypo";
 import Leavel2 from "./DisplayViolationData/Leavel2";
 import Leavel3 from "./DisplayViolationData/Leavel3";
 import Kapa from "./ViolationForm/Kapa";
+import Month1 from "./ViolationForm/Month1";
+import Month2 from "./ViolationForm/Month2";
+import Month3 from "./ViolationForm/Month3";
 
 // Tab View
 const Violation = () => {
@@ -36,9 +38,9 @@ const Violation = () => {
     leavel2: Leavel2,
     leavel3: Leavel3,
     leavel4: CloseViolation,
-    month1: Kapa,
-    month2: Kapa2,
-    month3: Kapa3,
+    month1: Month1,
+    month2: Month2,
+    month3: Month3,
   });
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -72,7 +74,10 @@ const Violation = () => {
         style={styles.floatingButton}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.bttnColor}>+ Log Violation</Text>
+        <View style={styles.bttnColor}>
+          <Entypo name="plus" size={22} color="white" />
+          <Text style={styles.bttnColor}> Log Violation</Text>
+        </View>
       </TouchableOpacity>
 
       {modalVisible && (
@@ -152,6 +157,9 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "400",
     fontSize: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

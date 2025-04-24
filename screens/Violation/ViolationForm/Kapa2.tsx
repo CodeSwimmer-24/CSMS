@@ -29,6 +29,16 @@ const Kapa2 = ({ isVisible, onClose, title, selectedDate }) => {
   const [showViolationDetails, setShowViolationDetails] = useState(false);
   const [showImmediateAction, setShowImmediateAction] = useState(false);
 
+  const [rootCauseAnalysis, setRootCauseAnalysis] = useState([{ id: 1 }]);
+
+  const addRootCause = () => {
+    setRootCauseAnalysis([...rootCauseAnalysis, { id: Date.now() }]);
+  };
+
+  const removeRootCause = (id) => {
+    setRootCauseAnalysis(rootCauseAnalysis.filter((item) => item.id !== id));
+  };
+
   return (
     <Modal
       isVisible={isVisible}
@@ -130,15 +140,36 @@ const Kapa2 = ({ isVisible, onClose, title, selectedDate }) => {
           </TouchableOpacity>
 
           <View style={{ marginTop: 20 }}>
-            <InputBox
-              placeholder="Root Cause Analysis"
-              label="Root Cause Analysis"
-            />
-            <InputBox placeholder="Target Date/Time" label="Target Date/Time" />
+            <Text style={styles.sectionTitle}>Root Cause Analysis</Text>
+            {rootCauseAnalysis.map((item) => (
+              <View key={item.id} style={styles.preventiveActionRow}>
+                <View style={{ flex: 1, marginTop: 0 }}>
+                  <InputBox placeholder="WHY?" />
+
+                  <View style={{ marginTop: -20 }}>
+                    <InputBox placeholder="Date" />
+                  </View>
+                </View>
+                <TouchableOpacity
+                  onPress={() => removeRootCause(item.id)}
+                  style={styles.deleteButton}
+                >
+                  <Ionicons
+                    name="close-circle"
+                    size={28}
+                    color={colors.danger}
+                  />
+                </TouchableOpacity>
+              </View>
+            ))}
+            <TouchableOpacity style={styles.addButton} onPress={addRootCause}>
+              <Ionicons name="add-circle" size={28} color={colors.success} />
+              <Text style={styles.addButtonText}>Add Root Cause</Text>
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity style={styles.submitButton}>
-            <Ionicons name="checkmark-circle" size={24} color="white" />
+            <Ionicons name="checkmark-circle" size={28} color="white" />
             <Text style={styles.uploadText}>Submit Report</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -193,6 +224,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
+  sectionTitle: {
+    fontWeight: "600",
+    fontSize: 15,
+    color: colors.primary,
+  },
+  preventiveActionRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  deleteButton: {
+    marginLeft: 10,
+  },
   submitButton: {
     flexDirection: "row",
     justifyContent: "center",
@@ -203,6 +248,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     alignItems: "center",
+  },
+  addButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  addButtonText: {
+    marginLeft: 5,
+    color: colors.success,
+    fontWeight: "600",
   },
   uploadText: { color: "white", fontWeight: "600", marginLeft: 10 },
 });
