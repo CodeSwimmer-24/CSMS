@@ -20,7 +20,7 @@ const settingsOptions = [
       "SSS Audit, Store Audit, PPE Audit, Line Walk Audit, Internal Audit",
     icon: "bonfire",
     color: "#E76F51",
-    route: "FSGR",
+    route: "AuditForms",
   },
   {
     id: 3,

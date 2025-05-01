@@ -15,6 +15,7 @@ import Accidents from "./screens/Accidents";
 import Violation from "./screens/Violation";
 import DailyHouseKeeping from "./screens/ToolsBoxMeeting/Components/DailyHouseKeeping";
 import TbtHistory from "./screens/Dashboard/SafeJobExecution/TbtHistory";
+import AuditsForms from "./screens/AuditsForms";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -35,7 +36,7 @@ export default function App() {
         <Stack.Screen name="DailyJobPlan" component={DailyJobPlan} />
         <Stack.Screen name="ToolsAndTackles" component={ToolsAndTackles} />
         <Stack.Screen name="PPECheckList" component={PPECheckList} />
-        <Stack.Screen name="FSGR" component={FSGR} />
+        <Stack.Screen name="AuditForms" component={AuditsForms} />
         <Stack.Screen name="Accidents" component={Accidents} />
         <Stack.Screen name="Violation" component={Violation} />
         <Stack.Screen name="dailyHouseKeeping" component={DailyHouseKeeping} />

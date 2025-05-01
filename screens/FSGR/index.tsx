@@ -39,7 +39,7 @@ export default function FSGR() {
     <>
       {/* Header Section */}
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>FSGR FORM</Text>
+        <Text style={styles.headerText}>Audits</Text>
         <Text style={styles.headerDescription}>
           You have to fill all the forms on a daily basis, so that the record is
           maintained.
