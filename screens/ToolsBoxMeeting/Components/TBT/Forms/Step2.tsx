@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import InputBox from "../../../../../components/InputBox"; // Importing InputBox component
 import { colors } from "../../../../../global/colors";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const StepTwo = ({ nextStep, prevStep, setFormData, formData }) => {
   const [form, setForm] = useState({
@@ -80,14 +80,14 @@ const StepTwo = ({ nextStep, prevStep, setFormData, formData }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={prevStep}>
           <View style={styles.buttonIcon}>
-            <AntDesign name="arrowleft" size={20} color="white" />
+            <MaterialIcons name="arrow-back-ios" size={20} color="white" />
             <Text style={styles.buttonText}> Prev</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={nextStep}>
           <View style={styles.buttonIcon}>
             <Text style={styles.buttonText}>Next </Text>
-            <AntDesign name="arrowright" size={20} color="white" />
+            <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
           </View>
         </TouchableOpacity>
       </View>
@@ -109,6 +109,8 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
     fontWeight: "600",
+    paddingTop: 30,
+
   },
   scrollContent: {
     padding: 20,

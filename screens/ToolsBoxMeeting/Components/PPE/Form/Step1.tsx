@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import InputBox from "../../../../../components/InputBox";
 import { colors } from "../../../../../global/colors";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const StepOne = ({ nextStep, setFormData, formData }) => (
   <>
@@ -26,8 +27,8 @@ const StepOne = ({ nextStep, setFormData, formData }) => (
       <TouchableOpacity style={styles.button} onPress={nextStep}>
         <View style={styles.buttonIcon}>
           <Text style={styles.buttonText}>Next</Text>
-          <AntDesign
-            name="arrowright"
+          <MaterialIcons
+            name="arrow-forward-ios"
             style={{ marginLeft: 10 }}
             size={20}
             color="white"
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
     fontWeight: "600",
+    paddingTop: 30,
   },
   button: {
     backgroundColor: colors.primary,

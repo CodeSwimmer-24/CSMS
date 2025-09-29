@@ -6,41 +6,73 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { MaterialIcons, Octicons } from "@expo/vector-icons";
 import InputBox from "../../../../../components/InputBox";
 import { colors } from "../../../../../global/colors";
 
-const PPE_OPTIONS = [
-  "Safety Shoes",
-  "Safety Helmet with Chain Strap",
-  "Safety Ear Plug",
-  "Safety Hand Gloves",
-  "Safety Goggles",
-  "Safety Florescent Jacket",
-  "Safety Resistant Jacket",
-  "Safety Heat Jacket",
-  "Safety Heat Dust Mask",
-  "Safety Leg Guard",
-  "Safety Face Shield",
-];
+interface PPEItem {
+  id: string;
+  name: string;
+  checked: boolean;
+}
 
 const StepTwo = ({ prevStep }) => {
-  const [ppeItems, setPpeItems] = useState([
-    { employeeName: "", ppeName: PPE_OPTIONS[0], condition: "Good" },
+  const [ppeData, setPpeData] = useState([
+    {
+      employeeName: "",
+      ppeList: [
+        { id: '1', name: 'Safety Shoes', checked: true },
+        { id: '2', name: 'Safety Helmet with chain Strap', checked: true },
+        { id: '3', name: 'Safety Ear Plug', checked: true },
+        { id: '4', name: 'Safety Hand Gloves', checked: true },
+        { id: '5', name: 'Safety Goggles', checked: true },
+        { id: '6', name: 'Safety Florescent Jacket', checked: true },
+        { id: '7', name: 'Safety Resistant Jacket', checked: true },
+        { id: '8', name: 'Safety Heat Jacket', checked: true },
+        { id: '9', name: 'Safety Dust Mask', checked: false },
+        { id: '10', name: 'Safety Leg Guard', checked: false },
+        { id: '11', name: 'Safety Face Shield', checked: false },
+      ] as PPEItem[]
+    },
   ]);
 
   const addPpeItem = () => {
-    setPpeItems([
-      ...ppeItems,
-      { employeeName: "", ppeName: PPE_OPTIONS[0], condition: "Good" },
+    setPpeData([
+      ...ppeData,
+      {
+        employeeName: "",
+        ppeList: [
+          { id: '1', name: 'Safety Shoes', checked: true },
+          { id: '2', name: 'Safety Helmet with chain Strap', checked: true },
+          { id: '3', name: 'Safety Ear Plug', checked: true },
+          { id: '4', name: 'Safety Hand Gloves', checked: false },
+          { id: '5', name: 'Safety Goggles', checked: false },
+          { id: '6', name: 'Safety Florescent Jacket', checked: true },
+          { id: '7', name: 'Safety Resistant Jacket', checked: true },
+          { id: '8', name: 'Safety Heat Jacket', checked: true },
+          { id: '9', name: 'Safety Dust Mask', checked: false },
+          { id: '10', name: 'Safety Leg Guard', checked: false },
+          { id: '11', name: 'Safety Face Shield', checked: false },
+        ] as PPEItem[]
+      },
     ]);
   };
 
-  const removePpeItem = (index) => {
-    if (ppeItems.length > 1) {
-      setPpeItems(ppeItems.filter((_, i) => i !== index));
+  const removePpeItem = (index: number) => {
+    if (ppeData.length > 1) {
+      setPpeData(ppeData.filter((_, i) => i !== index));
     }
+  };
+
+  const updateEmployeeName = (index: number, name: string) => {
+    const newPpeData = [...ppeData];
+    newPpeData[index].employeeName = name;
+    setPpeData(newPpeData);
+  };
+
+  const handleSubmit = () => {
+    console.log("PPE Data submitted:", ppeData);
+    // Add your submit logic here
   };
 
   return (
@@ -49,58 +81,46 @@ const StepTwo = ({ prevStep }) => {
         <Text style={styles.headerText}>Step Two</Text>
       </View>
       <ScrollView style={{ padding: 20 }}>
-        {ppeItems.map((ppe, index) => (
-          <View key={index} style={styles.ppeContainer}>
-            <InputBox placeholder="Enter Employee Name" label="Employee Name" />
+        {ppeData.map((employee, employeeIndex) => (
+          <View key={employeeIndex} style={styles.ppeContainer}>
+            
+            <InputBox
+              placeholder="Enter Employee Name"
+              label="Employee Name"
+              value={employee.employeeName}
+              onChangeText={(text: string) => updateEmployeeName(employeeIndex, text)}
+            />
 
-            <View style={styles.pickerContainer}>
-              <MaterialIcons
-                name="verified"
-                size={20}
-                color={colors.primary}
-                style={styles.icon}
-              />
-              <Picker
-                selectedValue={ppe.ppeName}
-                onValueChange={(itemValue) => {
-                  const newPpeItems = [...ppeItems];
-                  newPpeItems[index].ppeName = itemValue;
-                  setPpeItems(newPpeItems);
-                }}
-                style={styles.picker}
-              >
-                {PPE_OPTIONS.map((ppe, idx) => (
-                  <Picker.Item key={idx} label={ppe} value={ppe} />
-                ))}
-              </Picker>
+            <View style={styles.checklistCard}>
+              {employee.ppeList.map((ppe) => (
+                <View key={ppe.id} style={styles.checklistRow}>
+                  <Text style={styles.ppeItemText}>{ppe.name}</Text>
+                  <View style={styles.buttonGroup}>
+                    <View
+                      style={[
+                        styles.checkButton,
+                        ppe.checked && styles.checkButtonActive,
+                      ]}
+                    >
+                      <MaterialIcons name="check" size={14} color="#fff" />
+                    </View>
+                    <View
+                      style={[
+                        styles.crossButton,
+                        !ppe.checked && styles.crossButtonActive,
+                      ]}
+                    >
+                      <MaterialIcons name="close" size={14} color="#fff" />
+                    </View>
+                  </View>
+                </View>
+              ))}
             </View>
 
-            <View style={styles.pickerContainer}>
-              <MaterialIcons
-                name="verified"
-                size={20}
-                color={colors.primary}
-                style={styles.icon}
-              />
-              <Picker
-                selectedValue={ppe.condition}
-                onValueChange={(itemValue) => {
-                  const newPpeItems = [...ppeItems];
-                  newPpeItems[index].condition = itemValue;
-                  setPpeItems(newPpeItems);
-                }}
-                style={styles.picker}
-              >
-                <Picker.Item label="Good" value="Good" />
-                <Picker.Item label="Damaged" value="Damaged" />
-                <Picker.Item label="Bad Condition" value="Bad Condition" />
-              </Picker>
-            </View>
-
-            {ppeItems.length > 1 && (
+            {ppeData.length > 1 && (
               <TouchableOpacity
                 style={styles.removeButton}
-                onPress={() => removePpeItem(index)}
+                onPress={() => removePpeItem(employeeIndex)}
               >
                 <Octicons name="trash" size={20} color="white" />
                 <Text style={styles.buttonText}>Remove</Text>
@@ -119,7 +139,7 @@ const StepTwo = ({ prevStep }) => {
           >
             <Text style={styles.buttonText}>Prev</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.submitButton}>
+          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
             <Text style={styles.buttonText}>SUBMIT ✓</Text>
           </TouchableOpacity>
         </View>
@@ -137,6 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     paddingVertical: 20,
     paddingHorizontal: 20,
+    paddingTop: 50,
   },
   headerText: {
     color: "white",
@@ -144,23 +165,54 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   ppeContainer: {
-    marginBottom: 15,
+    marginBottom: 25,
   },
-  pickerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+  checklistCard: {
     backgroundColor: "#fff",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#ddd",
-    marginBottom: 10,
+    padding: 10,
+    marginTop: 10,
   },
-  picker: {
+  checklistRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f0f0f0",
+  },
+  ppeItemText: {
+    fontSize: 14,
+    color: "#333",
     flex: 1,
-    height: 50,
   },
-  icon: {
-    marginLeft: 10,
+  buttonGroup: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  checkButton: {
+    width: 18,
+    height: 18,
+    borderRadius: 16,
+    backgroundColor: "#e0e0e0",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  checkButtonActive: {
+    backgroundColor: "#22c55e",
+  },
+  crossButton: {
+    width: 18,
+    height: 18,
+    borderRadius: 16,
+    backgroundColor: "#e0e0e0",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  crossButtonActive: {
+    backgroundColor: "#ef4444",
   },
   addButton: {
     backgroundColor: colors.secondary,
@@ -172,11 +224,11 @@ const styles = StyleSheet.create({
   removeButton: {
     flexDirection: "row",
     justifyContent: "center",
-    backgroundColor: `${colors.danger}`,
+    backgroundColor: colors.danger,
     padding: 12,
     borderRadius: 10,
     alignItems: "center",
-    marginBottom: 10,
+    marginTop: 10,
   },
   buttonText: {
     color: "white",

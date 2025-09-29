@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../../global/colors";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -74,7 +74,7 @@ const Dashboard = () => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   headerContainer: {
     padding: 20,
     backgroundColor: colors.primary,
@@ -84,7 +84,7 @@ const styles = {
   headerText: {
     color: "#fff",
     fontSize: 22,
-    fontWeight: 600,
+    fontWeight: "600",
   },
   contentContainer: {
     alignItems: "center",
@@ -135,6 +135,6 @@ const styles = {
     color: "#505050",
     paddingVertical: 5,
   },
-};
+});
 
 export default Dashboard;

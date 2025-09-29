@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import InputBox from "../../../../../components/InputBox"; // Importing InputBox component
 import { colors } from "../../../../../global/colors";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const StepThree = ({ nextStep, prevStep, formData, setFormData }) => {
   const [form, setForm] = useState({
@@ -84,13 +84,13 @@ const StepThree = ({ nextStep, prevStep, formData, setFormData }) => {
       {/* Fixed Bottom Navigation Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={prevStep}>
-          <AntDesign name="arrowleft" size={20} color="white" />
+          <MaterialIcons name="arrow-back-ios" size={20} color="white" />
           <Text style={styles.buttonText}> Prev</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={nextStep}>
           <Text style={styles.buttonText}>Next </Text>
-          <AntDesign name="arrowright" size={20} color="white" />
+          <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -108,6 +108,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     color: "#fff",
+    paddingTop: 30,
+
   },
   scrollContent: {
     padding: 20,

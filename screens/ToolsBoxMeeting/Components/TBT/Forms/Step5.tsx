@@ -9,7 +9,7 @@ import {
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { colors } from "../../../../../global/colors";
 import InputBox from "../../../../../components/InputBox";
-import { Octicons } from "@expo/vector-icons";
+import { MaterialIcons, Octicons } from "@expo/vector-icons";
 
 const StepFive = ({ nextStep, prevStep }) => {
   const [employees, setEmployees] = useState([
@@ -61,13 +61,13 @@ const StepFive = ({ nextStep, prevStep }) => {
       {/* Navigation Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={prevStep}>
-          <AntDesign name="arrowleft" size={20} color="white" />
+          <MaterialIcons name="arrow-back-ios" size={20} color="white" />
           <Text style={styles.buttonText}> Prev</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={nextStep}>
           <Text style={styles.buttonText}>Next </Text>
-          <AntDesign name="arrowright" size={20} color="white" />
+          <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     color: "#fff",
+    paddingTop: 30,
   },
   scrollContent: {
     paddingBottom: 20,

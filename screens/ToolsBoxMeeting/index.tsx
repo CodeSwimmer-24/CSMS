@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import {  MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../global/colors";
 
@@ -68,11 +68,12 @@ export default function ToolBoxMeetingScreen() {
               <View style={styles.cardContent}>
                 <Text style={styles.cardTitle}>{item.title}</Text>
                 <View style={styles.goButton}>
-                  <AntDesign
-                    name="arrowright"
+                  <MaterialIcons
+                    name="arrow-forward-ios"
                     size={18}
                     color="gray"
                     style={styles.goButtonIcon}
+                    
                   />
                 </View>
               </View>

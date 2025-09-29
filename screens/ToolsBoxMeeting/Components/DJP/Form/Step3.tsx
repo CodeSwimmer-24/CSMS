@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
     fontWeight: "600",
+    paddingTop: 30,
   },
   pickerContainer: {
     borderWidth: 1,
