@@ -43,7 +43,7 @@ export default function ToolBoxMeetingScreen() {
     <>
       {/* Header Section */}
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Tool Box Meeting</Text>
+        <Text style={styles.headerText}>Safe Execution of JOb</Text>
         <Text style={styles.headerDescription}>
           You have to fill all the forms on a daily basis, so that the record is
           maintained.
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     paddingVertical: 15,
     paddingHorizontal: 25,
+    paddingTop: 50,
   },
   headerText: {
     fontSize: 24,
